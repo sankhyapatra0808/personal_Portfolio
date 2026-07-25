@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" fill="none">
+  <defs><linearGradient id="m" x1="0" y1="0" x2="1600" y2="1100"><stop stop-color="#101512"/><stop offset="1" stop-color="#25332B"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="25" stdDeviation="30" flood-opacity=".4"/></filter></defs>
+  <rect width="1600" height="1100" fill="url(#m)"/>
+  <circle cx="1240" cy="180" r="310" fill="#73FF9B" fill-opacity=".08"/>
+  <circle cx="250" cy="930" r="360" fill="#73FF9B" fill-opacity=".05"/>
+  <text x="140" y="170" fill="#73FF9B" font-family="Arial" font-size="22" letter-spacing="7">SPLITVERSE MOBILE</text>
+  <text x="140" y="250" fill="white" font-family="Arial" font-size="66" font-weight="700">Fair splitting,<tspan x="140" dy="76">always within reach.</tspan></text>
+  <text x="140" y="445" fill="#A9B7AE" font-family="Arial" font-size="23">Rooms, friends, wallet and settlements</text>
+  <text x="140" y="480" fill="#A9B7AE" font-family="Arial" font-size="23">connected to one shared backend.</text>
+  <g filter="url(#s)">
+    <rect x="930" y="80" width="420" height="900" rx="70" fill="#050706" stroke="#626C65" stroke-width="6"/>
+    <rect x="955" y="110" width="370" height="840" rx="48" fill="#F3F4F1"/>
+    <rect x="1070" y="125" width="140" height="24" rx="12" fill="#0A0D0B"/>
+    <text x="995" y="210" fill="#101512" font-family="Arial" font-size="22" font-weight="700">Good evening, Sankhya</text>
+    <circle cx="1274" cy="202" r="22" fill="#101512"/><path d="M1263 202h22M1274 191v22" stroke="#73FF9B" stroke-width="3"/>
+    <rect x="985" y="252" width="310" height="160" rx="28" fill="#101512"/>
+    <text x="1015" y="294" fill="#A6B0A9" font-family="Arial" font-size="14">Total balance</text>
+    <text x="1015" y="352" fill="white" font-family="Arial" font-size="39" font-weight="700">₹12,480</text>
+    <rect x="1190" y="370" width="76" height="23" rx="11" fill="#73FF9B"/><text x="1207" y="386" fill="#101512" font-family="Arial" font-size="11" font-weight="700">+14%</text>
+    <text x="985" y="470" fill="#101512" font-family="Arial" font-size="21" font-weight="700">Active rooms</text>
+    <rect x="985" y="505" width="310" height="112" rx="22" fill="#E4E8E3"/>
+    <circle cx="1024" cy="557" r="25" fill="#73FF9B"/><text x="1064" y="548" fill="#101512" font-family="Arial" font-size="16" font-weight="700">Weekend dinner</text><text x="1064" y="574" fill="#68706B" font-family="Arial" font-size="12">3 members · ₹3,860</text><text x="1240" y="564" fill="#101512" font-family="Arial" font-size="20">›</text>
+    <rect x="985" y="635" width="310" height="112" rx="22" fill="#E4E8E3"/>
+    <circle cx="1024" cy="687" r="25" fill="#D5B68B"/><text x="1064" y="678" fill="#101512" font-family="Arial" font-size="16" font-weight="700">Apartment</text><text x="1064" y="704" fill="#68706B" font-family="Arial" font-size="12">4 members · ₹8,200</text><text x="1240" y="694" fill="#101512" font-family="Arial" font-size="20">›</text>
+    <rect x="985" y="790" width="310" height="92" rx="25" fill="#101512"/>
+    <g fill="#A5ADA7" font-family="Arial" font-size="11"><text x="1002" y="855">Home</text><text x="1070" y="855">Rooms</text><text x="1143" y="855">Wallet</text><text x="1212" y="855">Friends</text></g>
+    <circle cx="1018" cy="821" r="10" fill="#73FF9B"/><circle cx="1087" cy="821" r="10" fill="#68716B"/><circle cx="1158" cy="821" r="10" fill="#68716B"/><circle cx="1232" cy="821" r="10" fill="#68716B"/>
+  </g>
+  <rect x="140" y="590" width="540" height="210" rx="34" fill="#1A211D" stroke="#3C4A41"/>
+  <text x="180" y="642" fill="#73FF9B" font-family="Arial" font-size="16" letter-spacing="3">MOBILE-FIRST DETAILS</text>
+  <g fill="white" font-family="Arial" font-size="20"><text x="180" y="700">• Safe-area aware layouts</text><text x="180" y="738">• Scrollable overlays and dropdowns</text><text x="180" y="776">• Offline and network error states</text></g>
+</svg>

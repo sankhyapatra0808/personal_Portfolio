@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#111712"/>
+  <text x="120" y="120" fill="#73FF9B" font-family="Arial" font-size="20" letter-spacing="6">ROOM CREATION FLOW</text>
+  <text x="120" y="188" fill="white" font-family="Arial" font-size="54" font-weight="700">Fast entry. Clear assignment.</text>
+  <g>
+    <rect x="130" y="260" width="360" height="660" rx="55" fill="#050706" stroke="#526159" stroke-width="5"/>
+    <rect x="151" y="285" width="318" height="610" rx="38" fill="#F4F5F2"/>
+    <text x="182" y="350" fill="#111712" font-family="Arial" font-size="22" font-weight="700">Start new room</text>
+    <text x="182" y="405" fill="#68716B" font-family="Arial" font-size="13">Room name</text><rect x="182" y="420" width="256" height="54" rx="16" fill="white" stroke="#DCE0DC"/><text x="202" y="454" fill="#111712" font-family="Arial" font-size="14">Weekend dinner</text>
+    <text x="182" y="520" fill="#68716B" font-family="Arial" font-size="13">Friends</text><rect x="182" y="535" width="256" height="150" rx="18" fill="white" stroke="#DCE0DC"/>
+    <circle cx="214" cy="575" r="18" fill="#73FF9B"/><text x="247" y="580" fill="#111712" font-family="Arial" font-size="14">Rahul</text><circle cx="412" cy="575" r="10" fill="#111712"/>
+    <circle cx="214" cy="630" r="18" fill="#D5B68B"/><text x="247" y="635" fill="#111712" font-family="Arial" font-size="14">Ananya</text><circle cx="412" cy="630" r="10" fill="#111712"/>
+    <text x="182" y="735" fill="#68716B" font-family="Arial" font-size="13">Paid by</text><rect x="182" y="750" width="256" height="54" rx="16" fill="white" stroke="#DCE0DC"/><text x="202" y="784" fill="#111712" font-family="Arial" font-size="14">Sankhya Patra</text><text x="408" y="784" fill="#111712" font-family="Arial" font-size="16">⌄</text>
+    <rect x="182" y="828" width="256" height="50" rx="18" fill="#111712"/><text x="264" y="860" fill="#73FF9B" font-family="Arial" font-size="15" font-weight="700">Create room</text>
+  </g>
+  <g>
+    <rect x="620" y="260" width="360" height="660" rx="55" fill="#050706" stroke="#526159" stroke-width="5"/>
+    <rect x="641" y="285" width="318" height="610" rx="38" fill="#F4F5F2"/>
+    <text x="672" y="350" fill="#111712" font-family="Arial" font-size="22" font-weight="700">Add expense</text>
+    <text x="672" y="418" fill="#68716B" font-family="Arial" font-size="13">Amount</text><text x="672" y="485" fill="#111712" font-family="Arial" font-size="48" font-weight="700">₹1,000</text>
+    <rect x="672" y="530" width="256" height="58" rx="17" fill="white" stroke="#DCE0DC"/><text x="692" y="566" fill="#111712" font-family="Arial" font-size="14">Restaurant bill</text>
+    <rect x="672" y="612" width="256" height="58" rx="17" fill="white" stroke="#DCE0DC"/><text x="692" y="648" fill="#111712" font-family="Arial" font-size="14">Item-wise split</text><text x="895" y="648" fill="#111712" font-family="Arial" font-size="16">›</text>
+    <rect x="672" y="694" width="256" height="58" rx="17" fill="white" stroke="#DCE0DC"/><text x="692" y="730" fill="#111712" font-family="Arial" font-size="14">Paid by Sankhya</text><text x="895" y="730" fill="#111712" font-family="Arial" font-size="16">›</text>
+    <rect x="672" y="810" width="256" height="54" rx="18" fill="#111712"/><text x="753" y="844" fill="#73FF9B" font-family="Arial" font-size="15" font-weight="700">Add expense</text>
+  </g>
+  <g>
+    <rect x="1110" y="260" width="360" height="660" rx="55" fill="#050706" stroke="#526159" stroke-width="5"/>
+    <rect x="1131" y="285" width="318" height="610" rx="38" fill="#F4F5F2"/>
+    <text x="1162" y="350" fill="#111712" font-family="Arial" font-size="22" font-weight="700">Settlements</text>
+    <rect x="1162" y="397" width="256" height="126" rx="21" fill="#111712"/><text x="1186" y="432" fill="#9CA69F" font-family="Arial" font-size="12">You are owed</text><text x="1186" y="482" fill="white" font-family="Arial" font-size="36" font-weight="700">₹550</text>
+    <text x="1162" y="580" fill="#68716B" font-family="Arial" font-size="13">Adjusted balances</text>
+    <rect x="1162" y="603" width="256" height="86" rx="18" fill="white" stroke="#DCE0DC"/><circle cx="1194" cy="646" r="20" fill="#73FF9B"/><text x="1226" y="642" fill="#111712" font-family="Arial" font-size="14" font-weight="700">Rahul owes you</text><text x="1226" y="665" fill="#68716B" font-family="Arial" font-size="12">₹100</text>
+    <rect x="1162" y="708" width="256" height="86" rx="18" fill="white" stroke="#DCE0DC"/><circle cx="1194" cy="751" r="20" fill="#D5B68B"/><text x="1226" y="747" fill="#111712" font-family="Arial" font-size="14" font-weight="700">Ananya settled</text><text x="1226" y="770" fill="#68716B" font-family="Arial" font-size="12">No balance</text>
+    <rect x="1162" y="824" width="256" height="48" rx="17" fill="#111712"/><text x="1238" y="855" fill="#73FF9B" font-family="Arial" font-size="14" font-weight="700">Send reminders</text>
+  </g>
+</svg>
