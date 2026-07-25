@@ -39,13 +39,20 @@ export default function Navigation() {
       >
         <Icon name={open ? "close" : "menu"} size={24} />
       </button>
-      <aside className={`navigation-overlay ${open ? "navigation-overlay--open" : ""}`} aria-hidden={!open}>
+      <aside
+        className={`navigation-overlay ${open ? "navigation-overlay--open" : ""}`}
+        aria-hidden={!open}
+      >
         <div className="navigation-overlay__inner">
           <p className="eyebrow">Navigate</p>
           <nav aria-label="Primary navigation">
             {links.map((link, index) => (
               <NavLink
-                className={({ isActive }: { isActive: boolean }) => (isActive ? "navigation-link navigation-link--active" : "navigation-link")}
+                className={({ isActive }: { isActive: boolean }) =>
+                  isActive
+                    ? "navigation-link navigation-link--active"
+                    : "navigation-link"
+                }
                 key={link.to}
                 to={link.to}
                 tabIndex={open ? 0 : -1}
@@ -56,8 +63,21 @@ export default function Navigation() {
             ))}
           </nav>
           <div className="navigation-overlay__footer">
-            <a href={profile.github} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              tabIndex={open ? 0 : -1}
+            >
               GitHub
+            </a>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              tabIndex={open ? 0 : -1}
+            >
+              LinkedIn
             </a>
             {profile.email ? (
               <a href={`mailto:${profile.email}`} tabIndex={open ? 0 : -1}>

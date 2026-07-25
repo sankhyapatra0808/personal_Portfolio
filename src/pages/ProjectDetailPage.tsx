@@ -15,7 +15,9 @@ export default function ProjectDetailPage() {
 
   useEffect(() => {
     const update = () => {
-      const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
+      const bottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 80;
       setAtBottom(bottom);
     };
     update();
@@ -26,15 +28,36 @@ export default function ProjectDetailPage() {
   if (!project) return <NotFoundPage />;
 
   const toggleScroll = () => {
-    window.scrollTo({ top: atBottom ? 0 : document.documentElement.scrollHeight, behavior: "smooth" });
+    window.scrollTo({
+      top: atBottom ? 0 : document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
   };
 
   return (
     <main className="inner-page project-detail-page">
-      <PageTitle title={`${project.title} — Sankhya Patra`} description={project.summary} />
-      <Link className="back-link" to="/projects"><Icon name="back" /> Back to projects</Link>
-      <button className="scroll-toggle" type="button" onClick={toggleScroll} aria-label={atBottom ? "Scroll to top" : "Scroll to bottom"}>
-        <span className={atBottom ? "scroll-toggle__arrow scroll-toggle__arrow--up" : "scroll-toggle__arrow"}>↓</span>
+      <PageTitle
+        title={`${project.title} — Sankhya Patra`}
+        description={project.summary}
+      />
+      <Link className="back-link" to="/projects">
+        <Icon name="back" /> Back to projects
+      </Link>
+      <button
+        className="scroll-toggle"
+        type="button"
+        onClick={toggleScroll}
+        aria-label={atBottom ? "Scroll to top" : "Scroll to bottom"}
+      >
+        <span
+          className={
+            atBottom
+              ? "scroll-toggle__arrow scroll-toggle__arrow--up"
+              : "scroll-toggle__arrow"
+          }
+        >
+          ↓
+        </span>
       </button>
 
       <section className="project-detail-hero">
@@ -45,34 +68,69 @@ export default function ProjectDetailPage() {
               <h1>{project.title}</h1>
             </div>
             <div className="project-fact">
-              <span>Year</span><strong>{project.year}</strong>
+              <span>Year</span>
+              <strong>{project.year}</strong>
             </div>
             <div className="project-fact">
-              <span>Technology</span><strong>{project.tech.join(", ")}</strong>
+              <span>Technology</span>
+              <strong>{project.tech.join(", ")}</strong>
             </div>
             <div className="button-row">
-              {project.preview ? <ButtonLink to={project.preview} external icon="external">Live Preview</ButtonLink> : null}
-              {project.code ? <ButtonLink to={project.code} external variant="secondary" icon="github">Source Code</ButtonLink> : null}
+              {project.preview ? (
+                <ButtonLink to={project.preview} external icon="external">
+                  {project.previewLabel ?? "Live Preview"}
+                </ButtonLink>
+              ) : null}
+
+              {project.code ? (
+                <ButtonLink
+                  to={project.code}
+                  external
+                  variant="secondary"
+                  icon="github"
+                >
+                  {project.codeLabel ?? "Source Code"}
+                </ButtonLink>
+              ) : null}
             </div>
           </Reveal>
           <Reveal className="project-description" delay={100}>
             <p className="eyebrow">Description</p>
-            {project.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {project.description.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
             <div className="project-highlights">
               <h2>Highlights</h2>
               <ul>
-                {project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                {project.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
               </ul>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="project-gallery">
+      <section
+        className={
+          project.slug === "splitverse-mobile"
+            ? "project-gallery project-gallery--mobile"
+            : "project-gallery"
+        }
+      >
         <div className="page-shell">
           {project.gallery.map((image, index) => (
-            <Reveal className="project-gallery__item" delay={index * 90} key={image}>
-              <img src={image} alt={`${project.title} project screen ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+            <Reveal
+              className="project-gallery__item"
+              delay={index * 90}
+              key={image}
+            >
+              <img
+                src={image}
+                alt={`${project.title} project screen ${index + 1}`}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+              />
             </Reveal>
           ))}
         </div>

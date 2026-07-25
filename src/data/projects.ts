@@ -14,7 +14,10 @@ export type Project = {
   visual: string;
   gallery: string[];
   code?: string;
+  codeLabel?: string;
+
   preview?: string;
+  previewLabel?: string;
 };
 
 export const projects: Project[] = [
@@ -53,12 +56,14 @@ export const projects: Project[] = [
       "Wallet, payment verification and transaction history",
       "Friends, invitations and live notifications",
     ],
-    visual: "/project-visuals/splitverse-web.svg",
+    visual: "/project-visuals/splitverse-web-cover.webp",
     gallery: [
-      "/project-visuals/splitverse-web.svg",
-      "/project-visuals/splitverse-web-detail.svg",
+      "/project-visuals/splitverse-web-item-splitting.webp",
+      "/project-visuals/splitverse-web-settlement.webp",
+      "/project-visuals/splitverse-web-wallet.webp",
+      "/project-visuals/splitverse-web-friends.webp",
     ],
-    code: "https://github.com/sankhyapatra0808/Split_Verse",
+    code: "https://github.com/sankhyapatra0808/SplitVerse_Mobile",
     preview: "https://split-verse.vercel.app",
   },
   {
@@ -93,12 +98,21 @@ export const projects: Project[] = [
       "OTP and Google authentication flows",
       "Installable Android testing builds with EAS",
     ],
-    visual: "/project-visuals/splitverse-mobile.svg",
+    visual: "/project-visuals/splitverse-mobile-cover.webp",
+
     gallery: [
-      "/project-visuals/splitverse-mobile.svg",
-      "/project-visuals/splitverse-mobile-detail.svg",
+      "/project-visuals/splitverse-mobile-auth.webp",
+      "/project-visuals/splitverse-mobile-dashboard.webp",
+      "/project-visuals/splitverse-mobile-room.webp",
+      "/project-visuals/splitverse-mobile-wallet.webp",
+      "/project-visuals/splitverse-mobile-friends.webp",
+      "/project-visuals/splitverse-mobile-settings.webp",
     ],
-    code: "https://github.com/sankhyapatra0808/Split_Verse",
+    code: "https://github.com/sankhyapatra0808/SplitVerse_Mobile",
+    codeLabel: "View Mobile Code",
+    preview:
+      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/tag/v1.0.0-preview",
+    previewLabel: "Download APK",
   },
   {
     slug: "devarena",
@@ -130,7 +144,12 @@ export const projects: Project[] = [
       "Responsive premium dark dashboard",
     ],
     visual: "/project-visuals/devarena.svg",
-    gallery: ["/project-visuals/devarena.svg", "/project-visuals/devarena-detail.svg"],
+    gallery: [
+      "/project-visuals/devarena.svg",
+      "/project-visuals/devarena-detail.svg",
+    ],
+    code: "https://github.com/sankhyapatra0808/Dev_Arena",
+    codeLabel: "Private Repository",
   },
   {
     slug: "new-portfolio",

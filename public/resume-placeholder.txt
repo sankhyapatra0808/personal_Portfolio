@@ -1,9 +1,0 @@
-SANKHYA PATRA
-B.Tech, Computer Science and Engineering — KIIT, Bhubaneswar
-
-Full-stack developer focused on React, TypeScript, Vite, Node.js, Express,
-PostgreSQL, Firebase and product-focused web/mobile development.
-
-Replace this placeholder with your final PDF resume at:
-public/sankhya-patra-resume.pdf
-Then update the resumeUrl field in src/data/profile.ts.

@@ -22,10 +22,10 @@ export const profile = {
   about:
     "I am a Computer Science and Engineering student and product-focused developer. My work spans full-stack web applications, mobile experiences, authentication, payments, real-time updates and carefully designed user interfaces. I enjoy turning complex workflows into products that feel clear and dependable.",
   availability: "Open to software engineering opportunities and meaningful collaborations.",
-  email: "",
+  email: "sankhyapatra0808@gmail.com",
   github: "https://github.com/sankhyapatra0808",
-  linkedin: "#",
-  resumeUrl: "",
+  linkedin: "www.linkedin.com/in/sankhyapatra",
+  resumeUrl: "/Sankhya_Patra_Resume.pdf",
 };
 
 export const skillGroups: SkillGroup[] = [

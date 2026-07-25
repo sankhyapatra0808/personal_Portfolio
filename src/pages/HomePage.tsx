@@ -12,14 +12,22 @@ import { projects } from "../data/projects";
 const sections = ["home", "about", "projects", "contact"];
 
 export default function HomePage() {
-  const featuredProject = projects.find((project) => project.featured) ?? projects[0];
+  const featuredProject =
+    projects.find((project) => project.featured) ?? projects[0];
 
   return (
     <main className="home-page">
-      <PageTitle title="Sankhya Patra — Full-Stack Developer" description="Portfolio of Sankhya Patra featuring SplitVerse, DevArena and selected web and mobile work." />
+      <PageTitle
+        title="Sankhya Patra — Full-Stack Developer"
+        description="Portfolio of Sankhya Patra featuring SplitVerse, DevArena and selected web and mobile work."
+      />
       <nav className="section-dots" aria-label="Homepage sections">
         {sections.map((section, index) => (
-          <a key={section} href={`#${section}`} aria-label={`Go to ${section} section`}>
+          <a
+            key={section}
+            href={`#${section}`}
+            aria-label={`Go to ${section} section`}
+          >
             <span>{String(index + 1).padStart(2, "0")}</span>
           </a>
         ))}
@@ -32,8 +40,12 @@ export default function HomePage() {
             <h1>{profile.role}</h1>
             <p className="hero-copy__intro">{profile.intro}</p>
             <div className="button-row">
-              <ButtonLink to="/projects" icon="arrow">View Projects</ButtonLink>
-              <ButtonLink to="#contact" variant="secondary">Contact Me</ButtonLink>
+              <ButtonLink to="/projects" icon="arrow">
+                View Projects
+              </ButtonLink>
+              <ButtonLink to="#contact" variant="secondary">
+                Contact Me
+              </ButtonLink>
             </div>
           </Reveal>
           <Reveal className="hero-art" delay={180}>
@@ -57,25 +69,48 @@ export default function HomePage() {
               title="Building products that solve real problems."
               description="A short introduction to my work, technical focus and development journey."
             />
-            <ButtonLink to="/about" icon="arrow">Learn More</ButtonLink>
+            <ButtonLink to="/about" icon="arrow">
+              Learn More
+            </ButtonLink>
           </Reveal>
         </div>
       </section>
 
-      <section className="snap-section feature-section feature-section--project" id="projects">
-        <div className="page-shell feature-grid">
-          <Reveal className="feature-visual project-feature-visual">
-            <img src={featuredProject.visual} alt={`${featuredProject.title} preview`} />
+      <section className="snap-section home-project-section" id="projects">
+        <div className="page-shell home-project-showcase">
+          <Reveal className="home-project-showcase__media">
+            <div className="home-project-showcase__image-wrap">
+              <img
+                src={featuredProject.visual}
+                alt={`${featuredProject.title} interface preview`}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
           </Reveal>
-          <Reveal className="feature-copy" delay={100}>
-            <SectionHeading
-              eyebrow="Selected work"
-              title={featuredProject.title}
-              description={featuredProject.summary}
+
+          <Reveal className="home-project-showcase__content" delay={100}>
+            <p className="eyebrow">Featured Project</p>
+
+            <h2>{featuredProject.title}</h2>
+
+            <span
+              className="home-project-showcase__divider"
+              aria-hidden="true"
             />
+
+            <p className="home-project-showcase__summary">
+              {featuredProject.summary}
+            </p>
+
             <div className="button-row">
-              <ButtonLink to={`/projects/${featuredProject.slug}`} icon="arrow">Case Study</ButtonLink>
-              <ButtonLink to="/projects" variant="secondary">All Projects</ButtonLink>
+              <ButtonLink to={`/projects/${featuredProject.slug}`} icon="arrow">
+                Case Study
+              </ButtonLink>
+
+              <ButtonLink to="/projects" variant="secondary">
+                All Projects
+              </ButtonLink>
             </div>
           </Reveal>
         </div>
@@ -97,6 +132,10 @@ export default function HomePage() {
               <a href={profile.github} target="_blank" rel="noreferrer">
                 <Icon name="github" />
                 <span>GitHub</span>
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                <Icon name="linkedin" />
+                <span>LinkedIn</span>
               </a>
               <Link to="/projects">
                 <Icon name="arrow" />
