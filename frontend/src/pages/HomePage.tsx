@@ -8,6 +8,7 @@ import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
+import ContactForm from "../components/ContactForm";
 
 const sections = ["home", "about", "projects", "contact"];
 
@@ -92,6 +93,13 @@ export default function HomePage() {
           <Reveal className="home-project-showcase__content" delay={100}>
             <p className="eyebrow">Featured Project</p>
 
+            <div className="home-project-showcase__meta">
+              <span className="project-status-badge">
+                {featuredProject.status}
+              </span>
+              <span>{featuredProject.period}</span>
+            </div>
+
             <h2>{featuredProject.title}</h2>
 
             <span
@@ -117,11 +125,14 @@ export default function HomePage() {
       </section>
 
       <section className="snap-section contact-section" id="contact">
-        <div className="page-shell contact-layout">
-          <Reveal>
+        <div className="page-shell contact-layout contact-layout--form">
+          <Reveal className="contact-copy">
             <p className="eyebrow">Contact</p>
+
             <h2>Let’s build something thoughtful.</h2>
+
             <p>{profile.availability}</p>
+
             <div className="contact-links">
               {profile.email ? (
                 <a href={`mailto:${profile.email}`}>
@@ -129,21 +140,29 @@ export default function HomePage() {
                   <span>{profile.email}</span>
                 </a>
               ) : null}
+
               <a href={profile.github} target="_blank" rel="noreferrer">
                 <Icon name="github" />
                 <span>GitHub</span>
               </a>
+
               <a href={profile.linkedin} target="_blank" rel="noreferrer">
                 <Icon name="linkedin" />
                 <span>LinkedIn</span>
               </a>
+
               <Link to="/projects">
                 <Icon name="arrow" />
                 <span>View projects</span>
               </Link>
             </div>
           </Reveal>
+
+          <Reveal delay={120}>
+            <ContactForm />
+          </Reveal>
         </div>
+
         <Footer />
       </section>
     </main>

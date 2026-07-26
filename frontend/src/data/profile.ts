@@ -24,7 +24,7 @@ export const profile = {
   availability: "Open to software engineering opportunities and meaningful collaborations.",
   email: "sankhyapatra0808@gmail.com",
   github: "https://github.com/sankhyapatra0808",
-  linkedin: "www.linkedin.com/in/sankhyapatra",
+  linkedin: "https://www.linkedin.com/in/sankhyapatra",
   resumeUrl: "/Sankhya_Patra_Resume.pdf",
 };
 

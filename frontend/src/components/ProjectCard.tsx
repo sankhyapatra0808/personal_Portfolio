@@ -17,12 +17,17 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           <span className="project-card__index">{String(index + 1).padStart(2, "0")}</span>
         </div>
         <div className="project-card__content">
+          <div className="project-card__meta">
+            <span className="project-status-badge">{project.status}</span>
+            <span className="project-card__period">{project.period}</span>
+          </div>
           <p className="eyebrow">{project.eyebrow}</p>
           <div className="project-card__title-row">
             <h3>{project.title}</h3>
             <Icon name="arrow" />
           </div>
           <p>{project.summary}</p>
+          <p className="project-card__role">{project.role}</p>
           <ul className="tag-list" aria-label={`${project.title} technologies`}>
             {project.tech.slice(0, 6).map((technology) => (
               <li key={technology}>{technology}</li>

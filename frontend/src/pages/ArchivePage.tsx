@@ -18,13 +18,14 @@ export default function ArchivePage() {
           </Reveal>
           <div className="archive-table" role="table" aria-label="Project archive">
             <div className="archive-row archive-row--header" role="row">
-              <span>Year</span><span>Project</span><span>Built with</span><span>Open</span>
+              <span>Year</span><span>Project</span><span>Status</span><span>Built with</span><span>Open</span>
             </div>
             {projects.map((project, index) => (
               <Reveal key={project.slug} delay={index * 60}>
                 <Link className="archive-row" role="row" to={`/projects/${project.slug}`}>
                   <span>{project.year}</span>
                   <strong>{project.title}</strong>
+                  <span className="archive-status">{project.status}</span>
                   <span className="archive-tech">{project.tech.slice(0, 5).join(" · ")}</span>
                   <Icon name="arrow" />
                 </Link>

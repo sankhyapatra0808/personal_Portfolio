@@ -72,6 +72,20 @@ export default function ProjectDetailPage() {
               <strong>{project.year}</strong>
             </div>
             <div className="project-fact">
+              <span>Status</span>
+              <div>
+                <span className="project-status-badge">{project.status}</span>
+              </div>
+            </div>
+            <div className="project-fact">
+              <span>Development period</span>
+              <strong>{project.period}</strong>
+            </div>
+            <div className="project-fact">
+              <span>My role</span>
+              <strong>{project.role}</strong>
+            </div>
+            <div className="project-fact">
               <span>Technology</span>
               <strong>{project.tech.join(", ")}</strong>
             </div>

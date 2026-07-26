@@ -1,10 +1,21 @@
 export type ProjectCategory = "Full Stack" | "Mobile" | "Frontend";
 
+export type ProjectStatus =
+  | "Live"
+  | "Live · Active Development"
+  | "Preview"
+  | "Testing"
+  | "In Development"
+  | "Completed";
+
 export type Project = {
   slug: string;
   title: string;
   eyebrow: string;
   year: string;
+  period: string;
+  role: string;
+  status: ProjectStatus;
   category: ProjectCategory[];
   featured: boolean;
   summary: string;
@@ -26,6 +37,9 @@ export const projects: Project[] = [
     title: "SplitVerse Website",
     eyebrow: "Fair expense splitting, redesigned",
     year: "2026",
+    period: "June 2026 — Present",
+    role: "Creator · Product Designer · Full-Stack Developer",
+    status: "Live · Active Development",
     category: ["Full Stack", "Frontend"],
     featured: true,
     summary:
@@ -63,14 +77,19 @@ export const projects: Project[] = [
       "/project-visuals/splitverse-web-wallet.webp",
       "/project-visuals/splitverse-web-friends.webp",
     ],
-    code: "https://github.com/sankhyapatra0808/SplitVerse_Mobile",
+    code: "https://github.com/sankhyapatra0808/Split_Verse",
+    codeLabel: "View Web Code",
     preview: "https://split-verse.vercel.app",
+    previewLabel: "Live Website",
   },
   {
     slug: "splitverse-mobile",
     title: "SplitVerse Mobile",
     eyebrow: "Shared expenses on Android",
     year: "2026",
+    period: "July 2026 — Present",
+    role: "Creator · Mobile Developer · API Integration",
+    status: "Preview",
     category: ["Mobile", "Full Stack"],
     featured: false,
     summary:
@@ -111,7 +130,7 @@ export const projects: Project[] = [
     code: "https://github.com/sankhyapatra0808/SplitVerse_Mobile",
     codeLabel: "View Mobile Code",
     preview:
-      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/tag/v1.0.0-preview",
+      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/download/v1.0.0-preview/SplitVerse-Mobile-v1.0.0-preview.apk",
     previewLabel: "Download APK",
   },
   {
@@ -119,6 +138,9 @@ export const projects: Project[] = [
     title: "DevArena",
     eyebrow: "Build. Compete. Grow.",
     year: "2026",
+    period: "2026 — Present",
+    role: "Creator · Frontend and Firebase Developer",
+    status: "In Development",
     category: ["Frontend", "Full Stack"],
     featured: false,
     summary:
@@ -156,6 +178,9 @@ export const projects: Project[] = [
     title: "New Portfolio",
     eyebrow: "A portfolio rebuilt around my work",
     year: "2026",
+    period: "July 2026 — Present",
+    role: "Designer · Frontend Developer",
+    status: "In Development",
     category: ["Frontend"],
     featured: false,
     summary:
@@ -177,6 +202,11 @@ export const projects: Project[] = [
       "/project-visuals/new-portfolio.svg",
       "/project-visuals/new-portfolio-detail.svg",
     ],
+    code: "https://github.com/sankhyapatra0808/personal_Portfolio",
+    codeLabel: "Source Code",
+
+    preview: "https://YOUR-FINAL-PORTFOLIO-DOMAIN",
+    previewLabel: "Visit Portfolio",
   },
 ];
 
