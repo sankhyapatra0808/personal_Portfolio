@@ -245,10 +245,13 @@ a:focus-visible {
 }
 
 .home-page {
-  height: 100vh;
+  height: 100svh;
+  overflow-x: hidden;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
   scrollbar-width: none;
+  overscroll-behavior-y: contain;
 }
 
 .home-page::-webkit-scrollbar {
@@ -260,7 +263,7 @@ a:focus-visible {
   display: flex;
   min-height: 100svh;
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 .hero-section,
@@ -511,15 +514,24 @@ a:focus-visible {
   flex-direction: column;
   gap: 17px;
   transform: translateY(-50%);
+  transition: color 240ms ease;
 }
 
 .section-dots a {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  width: fit-content;
   color: var(--muted);
+  opacity: 0.48;
   font-size: 0.58rem;
+  font-weight: 500;
   letter-spacing: 0.12em;
+
+  transition:
+    color 220ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
 }
 
 .section-dots a::before {
@@ -527,8 +539,57 @@ a:focus-visible {
   display: block;
   width: 5px;
   height: 5px;
+  flex: 0 0 auto;
   border-radius: 50%;
   background: currentColor;
+
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.section-dots a:hover {
+  color: var(--ink);
+  opacity: 0.82;
+  transform: translateX(3px);
+}
+
+.section-dots
+  .section-dot--active {
+  color: var(--ink);
+  opacity: 1;
+  transform: translateX(6px);
+}
+
+.section-dots
+  .section-dot--active::before {
+  width: 10px;
+  height: 10px;
+  background: var(--green);
+  box-shadow:
+    0 0 0 4px
+    rgba(132, 242, 157, 0.18);
+}
+
+.section-dots--light a {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.section-dots--light a:hover {
+  color: #ffffff;
+}
+
+.section-dots--light
+  .section-dot--active {
+  color: #ffffff;
+}
+
+.section-dots--light
+  .section-dot--active::before {
+  background: var(--green);
 }
 
 .feature-grid {
@@ -1992,34 +2053,300 @@ a:focus-visible {
   }
 }
 
+/* =========================================================
+   CONTACT SNAP SECTION
+   ========================================================= */
+
 .contact-section {
-  justify-content: flex-start;
+  /*
+   * The Contact section must fit inside one desktop
+   * viewport because the page uses mandatory snapping.
+   */
+  display: grid;
+  grid-template-rows:
+    minmax(0, 1fr)
+    auto;
+
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+
+  background: #151515;
+  color: #ffffff;
 }
 
 .contact-layout--form {
+  /*
+   * Use more horizontal space than the normal content
+   * sections so the heading and form do not collide.
+   */
+  width: min(
+    1280px,
+    calc(100% - 160px)
+  );
+
+  min-width: 0;
+  min-height: 0;
+  margin: 0 auto;
+
   display: grid;
   grid-template-columns:
-    minmax(0, 0.85fr)
-    minmax(360px, 1.15fr);
+    minmax(0, 0.88fr)
+    minmax(420px, 1.12fr);
+
   align-items: center;
-  gap: clamp(50px, 8vw, 120px);
-  min-height: auto;
-  padding: 120px 0 80px;
+  gap: clamp(
+    48px,
+    5vw,
+    84px
+  );
+
+  padding:
+    clamp(76px, 8vh, 100px)
+    0
+    clamp(22px, 3vh, 38px);
 }
 
 .contact-copy {
-  max-width: 720px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.contact-copy .eyebrow {
+  margin-bottom: clamp(
+    20px,
+    3vh,
+    30px
+  );
+}
+
+.contact-copy h2 {
+  /*
+   * This was the main cause of the overlap.
+   * The old heading was too large for its grid column.
+   */
+  width: 100%;
+  max-width: 7.4ch;
+  margin:
+    0
+    0
+    clamp(22px, 3vh, 34px);
+
+  color: #ffffff;
+
+  font-size: clamp(
+    4rem,
+    5.25vw,
+    6.25rem
+  );
+
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.contact-copy__description {
+  max-width: 440px;
+  margin: 0;
+
+  color: rgba(
+    255,
+    255,
+    255,
+    0.62
+  );
+
+  font-size: clamp(
+    0.88rem,
+    1.1vw,
+    1rem
+  );
+
+  line-height: 1.75;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+
+  max-width: 520px;
+  margin-top: clamp(
+    24px,
+    4vh,
+    38px
+  );
+}
+
+.contact-links a {
+  min-width: 0;
+  color: rgba(
+    255,
+    255,
+    255,
+    0.78
+  );
+}
+
+.contact-links a:hover {
+  color: #ffffff;
+}
+
+.contact-form-reveal {
+  min-width: 0;
+  width: 100%;
 }
 
 .contact-form {
-  position: relative;
-  display: grid;
-  gap: 22px;
   width: 100%;
-  padding: clamp(24px, 4vw, 42px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  min-width: 0;
+  max-width: none;
+
+  /*
+   * The form height responds to the viewport but stays
+   * compact enough for the footer to remain visible.
+   */
+  min-height: 0;
+  height: clamp(
+    420px,
+    57vh,
+    548px
+  );
+
+  padding: clamp(
+    26px,
+    3vw,
+    40px
+  );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.17);
+
   border-radius: 26px;
-  background: rgba(255, 255, 255, 0.045);
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  display: grid;
+  align-content: stretch;
+  gap: clamp(
+    16px,
+    2vh,
+    22px
+  );
+}
+
+.contact-form textarea {
+  min-height: 105px;
+  max-height: 170px;
+}
+
+/*
+ * The footer receives its own auto-sized grid row.
+ * It no longer extends below the snap viewport.
+ */
+.contact-section__footer {
+  width: min(
+    1280px,
+    calc(100% - 160px)
+  );
+
+  min-width: 0;
+  margin: 0 auto;
+  padding:
+    0
+    0
+    clamp(10px, 1.8vh, 18px);
+}
+
+.contact-section__footer > * {
+  margin-top: 0;
+}
+
+.contact-section__footer .site-footer,
+.contact-section__footer .footer {
+  margin: 0;
+  padding:
+    16px
+    0
+    10px;
+}
+
+@media (
+  min-width: 981px
+) and (
+  max-height: 790px
+) {
+  .contact-layout--form {
+    gap: 46px;
+
+    padding:
+      60px
+      0
+      14px;
+  }
+
+  .contact-copy .eyebrow {
+    margin-bottom: 15px;
+  }
+
+  .contact-copy h2 {
+    max-width: 7.8ch;
+    margin-bottom: 18px;
+
+    font-size: clamp(
+      3.4rem,
+      4.8vw,
+      5.3rem
+    );
+  }
+
+  .contact-copy__description {
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .contact-links {
+    gap: 11px 22px;
+    margin-top: 20px;
+  }
+
+  .contact-form {
+    height: clamp(
+      370px,
+      55vh,
+      445px
+    );
+
+    padding:
+      22px
+      28px;
+
+    gap: 13px;
+  }
+
+  .contact-form textarea {
+    min-height: 80px;
+    max-height: 115px;
+  }
+
+  .contact-section__footer {
+    padding-bottom: 6px;
+  }
+
+  .contact-section__footer .site-footer,
+  .contact-section__footer .footer {
+    padding:
+      10px
+      0
+      6px;
+  }
 }
 
 .contact-form__row {
@@ -2107,6 +2434,49 @@ a:focus-visible {
   opacity: 0.62;
 }
 
+/* =========================================================
+   ROUTE PAGE LOADER
+   ========================================================= */
+
+.page-loader {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 18px;
+  min-height: 100svh;
+  padding: 40px;
+  background: var(--paper);
+}
+
+.page-loader__spinner {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--line);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation:
+    page-loader-spin 700ms linear infinite;
+}
+
+.page-loader p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+}
+
+@keyframes page-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__spinner {
+    animation-duration: 1400ms;
+  }
+}
+
 @media (max-width: 900px) {
   .contact-layout--form {
     grid-template-columns: 1fr;
@@ -2122,5 +2492,113 @@ a:focus-visible {
   .contact-form {
     padding: 24px 20px;
     border-radius: 18px;
+  }
+}
+
+@media (max-width: 980px) {
+  .home-page {
+    height: auto;
+    min-height: 100svh;
+
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .snap-section {
+    height: auto;
+    min-height: 100svh;
+
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .contact-layout--form {
+    width: min(
+      760px,
+      calc(100% - 64px)
+    );
+
+    grid-template-columns: 1fr;
+    gap: 52px;
+
+    padding:
+      110px
+      0
+      64px;
+  }
+
+  .contact-copy h2 {
+    max-width: 9ch;
+
+    font-size: clamp(
+      3.8rem,
+      11vw,
+      6rem
+    );
+  }
+
+  .contact-form {
+    height: auto;
+    min-height: 510px;
+  }
+
+  .contact-section__footer {
+    width: min(
+      760px,
+      calc(100% - 64px)
+    );
+
+    padding-bottom: 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact-layout--form {
+    width: calc(100% - 36px);
+    gap: 40px;
+
+    padding:
+      96px
+      0
+      50px;
+  }
+
+  .contact-copy h2 {
+    max-width: 8.5ch;
+
+    font-size: clamp(
+      3.2rem,
+      16vw,
+      4.75rem
+    );
+  }
+
+  .contact-links {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .contact-form {
+    min-height: 540px;
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+
+  .contact-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-section__footer {
+    width: calc(100% - 36px);
   }
 }

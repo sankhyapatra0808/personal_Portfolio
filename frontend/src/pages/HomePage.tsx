@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ButtonLink from "../components/ButtonLink";
 import Footer from "../components/Footer";
@@ -10,28 +11,86 @@ import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import ContactForm from "../components/ContactForm";
 
-const sections = ["home", "about", "projects", "contact"];
+const sections = ["home", "about", "projects", "contact"] as const;
+
+type HomeSection = (typeof sections)[number];
 
 export default function HomePage() {
   const featuredProject =
     projects.find((project) => project.featured) ?? projects[0];
 
+  const [activeSection, setActiveSection] = useState<HomeSection>("home");
+
+  // Intersection Observer
+
+  useEffect(() => {
+    const sectionElements = sections
+      .map((section) => document.getElementById(section))
+      .filter((element): element is HTMLElement => Boolean(element));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (first, second) =>
+              second.intersectionRatio - first.intersectionRatio,
+          );
+
+        const mostVisibleSection = visibleEntries[0];
+
+        if (!mostVisibleSection) {
+          return;
+        }
+
+        setActiveSection(mostVisibleSection.target.id as HomeSection);
+      },
+      {
+        root: null,
+        rootMargin: "-12% 0px -28% 0px",
+        threshold: [0.2, 0.35, 0.5, 0.65, 0.8],
+      },
+    );
+
+    sectionElements.forEach((sectionElement) => {
+      observer.observe(sectionElement);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <main className="home-page">
+    <main id="main-content" className="home-page">
       <PageTitle
         title="Sankhya Patra — Full-Stack Developer"
         description="Portfolio of Sankhya Patra featuring SplitVerse, DevArena and selected web and mobile work."
       />
-      <nav className="section-dots" aria-label="Homepage sections">
-        {sections.map((section, index) => (
-          <a
-            key={section}
-            href={`#${section}`}
-            aria-label={`Go to ${section} section`}
-          >
-            <span>{String(index + 1).padStart(2, "0")}</span>
-          </a>
-        ))}
+      <nav
+        className={`section-dots ${
+          activeSection === "contact" ? "section-dots--light" : ""
+        }`}
+        aria-label="Homepage sections"
+      >
+        {sections.map((section, index) => {
+          const isActive = activeSection === section;
+
+          return (
+            <a
+              key={section}
+              href={`#${section}`}
+              className={
+                isActive ? "section-dot section-dot--active" : "section-dot"
+              }
+              aria-current={isActive ? "location" : undefined}
+              aria-label={`Go to ${section} section`}
+              onClick={() => setActiveSection(section)}
+            >
+              <span>{String(index + 1).padStart(2, "0")}</span>
+            </a>
+          );
+        })}
       </nav>
 
       <section className="snap-section hero-section" id="home">
@@ -131,7 +190,7 @@ export default function HomePage() {
 
             <h2>Let’s build something thoughtful.</h2>
 
-            <p>{profile.availability}</p>
+            <p className="contact-copy__description">{profile.availability}</p>
 
             <div className="contact-links">
               {profile.email ? (
@@ -158,12 +217,14 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
+          <Reveal className="contact-form-reveal" delay={120}>
             <ContactForm />
           </Reveal>
         </div>
 
-        <Footer />
+        <div className="contact-section__footer">
+          <Footer />
+        </div>
       </section>
     </main>
   );

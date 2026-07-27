@@ -19,39 +19,27 @@ const contactRateLimiter = rateLimit({
   legacyHeaders: false,
 
   message: {
-    message:
-      "Too many messages were sent. Please try again after 15 minutes.",
+    message: "Too many messages were sent. Please try again after 15 minutes.",
   },
 });
 
 function readString(value: unknown): string {
-  return typeof value === "string"
-    ? value
-    : "";
+  return typeof value === "string" ? value : "";
 }
 
-function normalizeSingleLine(
-  value: unknown,
-): string {
+function normalizeSingleLine(value: unknown): string {
   return readString(value)
     .replace(/[\r\n\t]+/g, " ")
     .replace(/\s{2,}/g, " ")
     .trim();
 }
 
-function normalizeMessage(
-  value: unknown,
-): string {
-  return readString(value)
-    .replace(/\r\n/g, "\n")
-    .replace(/\r/g, "\n")
-    .trim();
+function normalizeMessage(value: unknown): string {
+  return readString(value).replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
 }
 
 function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-    value,
-  );
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function escapeHtml(value: string): string {
@@ -63,141 +51,99 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#039;");
 }
 
-router.post(
-  "/contact",
-  contactRateLimiter,
-  async (request, response) => {
-    try {
-      const body =
-        (request.body ??
-          {}) as PortfolioContactRequest;
+router.post("/contact", contactRateLimiter, async (request, response) => {
+  try {
+    const body = (request.body ?? {}) as PortfolioContactRequest;
 
-      const name = normalizeSingleLine(
-        body.name,
-      );
+    const name = normalizeSingleLine(body.name);
 
-      const email = normalizeSingleLine(
-        body.email,
-      ).toLowerCase();
+    const email = normalizeSingleLine(body.email).toLowerCase();
 
-      const subject = normalizeSingleLine(
-        body.subject,
-      );
+    const subject = normalizeSingleLine(body.subject);
 
-      const message = normalizeMessage(
-        body.message,
-      );
+    const message = normalizeMessage(body.message);
 
-      /*
-       * Hidden honeypot field.
-       * Real visitors leave this blank.
-       */
-      const company = normalizeSingleLine(
-        body.company,
-      );
+    /*
+     * Hidden honeypot field.
+     * Real visitors leave this blank.
+     */
+    const company = normalizeSingleLine(body.company);
 
-      if (company) {
-        response.status(200).json({
-          message:
-            "Your message was received.",
-        });
+    if (company) {
+      response.status(200).json({
+        message: "Your message was received.",
+      });
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        name.length < 2 ||
-        name.length > 80
-      ) {
-        response.status(400).json({
-          message:
-            "Your name must contain between 2 and 80 characters.",
-        });
+    if (name.length < 2 || name.length > 80) {
+      response.status(400).json({
+        message: "Your name must contain between 2 and 80 characters.",
+      });
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        email.length > 160 ||
-        !isValidEmail(email)
-      ) {
-        response.status(400).json({
-          message:
-            "Please enter a valid email address.",
-        });
+    if (email.length > 160 || !isValidEmail(email)) {
+      response.status(400).json({
+        message: "Please enter a valid email address.",
+      });
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        subject.length < 3 ||
-        subject.length > 140
-      ) {
-        response.status(400).json({
-          message:
-            "The subject must contain between 3 and 140 characters.",
-        });
+    if (subject.length < 3 || subject.length > 140) {
+      response.status(400).json({
+        message: "The subject must contain between 3 and 140 characters.",
+      });
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        message.length < 20 ||
-        message.length > 3000
-      ) {
-        response.status(400).json({
-          message:
-            "The message must contain between 20 and 3,000 characters.",
-        });
+    if (message.length < 20 || message.length > 3000) {
+      response.status(400).json({
+        message: "The message must contain between 20 and 3,000 characters.",
+      });
 
-        return;
-      }
+      return;
+    }
 
-      const recipientEmail =
-        process.env.PORTFOLIO_TO_EMAIL?.trim();
+    const recipientEmail = process.env.PORTFOLIO_TO_EMAIL?.trim();
 
-      if (!recipientEmail) {
-        console.error(
-          "PORTFOLIO_TO_EMAIL is missing.",
-        );
+    if (!recipientEmail) {
+      console.error("PORTFOLIO_TO_EMAIL is missing.");
 
-        response.status(503).json({
-          message:
-            "The contact service is temporarily unavailable.",
-        });
+      response.status(503).json({
+        message: "The contact service is temporarily unavailable.",
+      });
 
-        return;
-      }
+      return;
+    }
 
-      const safeName = escapeHtml(name);
-      const safeEmail = escapeHtml(email);
-      const safeSubject =
-        escapeHtml(subject);
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeSubject = escapeHtml(subject);
 
-      const safeMessage =
-        escapeHtml(message).replaceAll(
-          "\n",
-          "<br />",
-        );
+    const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
 
-      const result =
-        await sendTransactionalEmail({
-          to: recipientEmail,
-          replyToEmail: email,
-          replyToName: name,
-          subject: `[Portfolio] ${subject}`,
+    const result = await sendTransactionalEmail({
+      to: recipientEmail,
+      replyToEmail: email,
+      replyToName: name,
+      subject: `[Portfolio] ${subject}`,
 
-          text: [
-            "New portfolio contact message",
-            "",
-            `Name: ${name}`,
-            `Email: ${email}`,
-            `Subject: ${subject}`,
-            "",
-            message,
-          ].join("\n"),
+      text: [
+        "New portfolio contact message",
+        "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Subject: ${subject}`,
+        "",
+        message,
+      ].join("\n"),
 
-          html: `
+      html: `
             <div
               style="
                 margin: 0;
@@ -273,29 +219,37 @@ router.post(
               </div>
             </div>
           `,
-        });
+    });
 
-      console.log(
-        "Portfolio contact email sent:",
-        result.messageId,
-      );
+    console.log("Portfolio contact email sent:", result.messageId);
 
-      response.status(200).json({
+    response.status(200).json({
+      message: "Your message was sent successfully.",
+    });
+  } catch (error) {
+    console.error("Portfolio contact request failed:", error);
+
+    const isEmailFailure =
+      error instanceof Error &&
+      (error.message.includes("Mail command failed") ||
+        error.message.includes("Invalid login") ||
+        error.message.includes("Connection timeout") ||
+        error.message.includes("Greeting never received"));
+
+    if (isEmailFailure) {
+      response.status(502).json({
         message:
-          "Your message was sent successfully.",
+          "The email service is temporarily unavailable. Please try again later.",
       });
-    } catch (error) {
-      console.error(
-        "Portfolio contact request failed:",
-        error,
-      );
 
-      response.status(500).json({
-        message:
-          "Something went wrong while sending your message. Please try again later.",
-      });
+      return;
     }
-  },
-);
+
+    response.status(500).json({
+      message:
+        "Something went wrong while sending your message. Please try again later.",
+    });
+  }
+});
 
 export default router;
