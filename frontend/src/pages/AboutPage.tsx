@@ -8,8 +8,11 @@ import { experience, profile, skillGroups } from "../data/profile";
 
 export default function AboutPage() {
   return (
-    <main className="inner-page">
-      <PageTitle title="About — Sankhya Patra" description="About Sankhya Patra, a full-stack developer focused on React, TypeScript, Node.js and practical product engineering." />
+    <main id="main-content" className="inner-page" tabIndex={-1}>
+      <PageTitle
+        title="About — Sankhya Patra"
+        description="About Sankhya Patra, a full-stack developer focused on React, TypeScript, Node.js and practical product engineering."
+      />
       <section className="inner-hero">
         <div className="page-shell inner-hero__grid">
           <Reveal className="inner-hero__visual">
@@ -21,9 +24,13 @@ export default function AboutPage() {
             <p>{profile.about}</p>
             <div className="button-row">
               {profile.resumeUrl ? (
-                <ButtonLink to={profile.resumeUrl} download icon="download">Download Resume</ButtonLink>
+                <ButtonLink to={profile.resumeUrl} download icon="download">
+                  Download Resume
+                </ButtonLink>
               ) : null}
-              <ButtonLink to="/projects" variant="secondary">View Work</ButtonLink>
+              <ButtonLink to="/projects" variant="secondary">
+                View Work
+              </ButtonLink>
             </div>
           </Reveal>
         </div>
@@ -40,12 +47,20 @@ export default function AboutPage() {
           </Reveal>
           <div className="skills-grid">
             {skillGroups.map((group, index) => (
-              <Reveal className="skill-card" delay={index * 80} key={group.title}>
-                <span className="skill-card__number">{String(index + 1).padStart(2, "0")}</span>
+              <Reveal
+                className="skill-card"
+                delay={index * 80}
+                key={group.title}
+              >
+                <span className="skill-card__number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <h3>{group.title}</h3>
                 <p>{group.summary}</p>
                 <ul className="tag-list">
-                  {group.skills.map((skill) => <li key={skill}>{skill}</li>)}
+                  {group.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
                 </ul>
               </Reveal>
             ))}
@@ -56,11 +71,18 @@ export default function AboutPage() {
       <section className="content-section content-section--soft">
         <div className="page-shell timeline-layout">
           <Reveal>
-            <SectionHeading eyebrow="Journey" title="Experience through building." />
+            <SectionHeading
+              eyebrow="Journey"
+              title="Experience through building."
+            />
           </Reveal>
           <div className="timeline">
             {experience.map((item, index) => (
-              <Reveal className="timeline-item" delay={index * 90} key={`${item.title}-${item.period}`}>
+              <Reveal
+                className="timeline-item"
+                delay={index * 90}
+                key={`${item.title}-${item.period}`}
+              >
                 <div className="timeline-item__period">{item.period}</div>
                 <div>
                   <h3>{item.title}</h3>

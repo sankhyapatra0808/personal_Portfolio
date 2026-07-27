@@ -62,7 +62,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main id="main-content" className="home-page">
+    <main id="main-content" className="home-page" tabIndex={-1}>
       <PageTitle
         title="Sankhya Patra — Full-Stack Developer"
         description="Portfolio of Sankhya Patra featuring SplitVerse, DevArena and selected web and mobile work."

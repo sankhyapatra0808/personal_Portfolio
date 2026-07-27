@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, type MouseEvent } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import RouteProgress from "./components/RouteProgress";
@@ -50,9 +50,84 @@ function PageLoader() {
   );
 }
 
+function handleSkipToMain(event: MouseEvent<HTMLAnchorElement>) {
+  event.preventDefault();
+
+  const mainContent = document.getElementById("main-content");
+
+  if (!mainContent) {
+    console.warn('Skip link target "#main-content" was not found.');
+
+    return;
+  }
+
+  /*
+   * Prefer the first page heading because focusing the
+   * complete <main> element often produces no visible
+   * change, especially on the homepage.
+   */
+  const focusTarget =
+    mainContent.querySelector<HTMLElement>("[data-skip-target], h1, h2") ??
+    mainContent;
+
+  const alreadyHadTabIndex = focusTarget.hasAttribute("tabindex");
+
+  if (!alreadyHadTabIndex) {
+    focusTarget.setAttribute("tabindex", "-1");
+  }
+
+  /*
+   * Focus first without allowing the browser to perform
+   * a separate automatic jump.
+   */
+  focusTarget.focus({
+    preventScroll: true,
+  });
+
+  /*
+   * scrollIntoView also works with the homepage's
+   * internal .home-page scroll container.
+   */
+  focusTarget.scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth",
+    block: "start",
+    inline: "nearest",
+  });
+
+  /*
+   * Brief visual confirmation that the skip action
+   * successfully reached the content.
+   */
+  focusTarget.classList.add("skip-target--active");
+
+  window.setTimeout(() => {
+    focusTarget.classList.remove("skip-target--active");
+
+    /*
+     * Remove only the temporary tabindex that this
+     * function added. Preserve existing tabindex values.
+     */
+    if (!alreadyHadTabIndex) {
+      focusTarget.removeAttribute("tabindex");
+    }
+  }, 1000);
+
+  /*
+   * Keep the meaningful fragment in the URL without
+   * causing another browser jump.
+   */
+  window.history.replaceState(null, "", "#main-content");
+}
+
 export default function App() {
   return (
     <>
+      <a className="skip-link" href="#main-content" onClick={handleSkipToMain}>
+        Skip to main content
+      </a>
+
       <ScrollToTop />
       <RouteProgress />
       <Navigation />

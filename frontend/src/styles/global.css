@@ -100,6 +100,93 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
+/* =========================================================
+   SKIP TO MAIN CONTENT
+   ========================================================= */
+
+.skip-link {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  z-index: 1000;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+  padding: 0 20px;
+
+  border: 2px solid var(--green);
+  border-radius: 999px;
+
+  background: #151515;
+  color: #ffffff;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+
+  opacity: 0;
+
+  transform: translate(-50%, -160%);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  color: #ffffff;
+  opacity: 1;
+
+  outline: 2px solid #ffffff;
+
+  outline-offset: 3px;
+
+  transform: translate(-50%, 0);
+}
+
+#main-content {
+  outline: none;
+}
+
+#main-content:focus-visible {
+  outline: none;
+}
+
+/* Visual confirmation after using the skip link. */
+
+[data-skip-target],
+#main-content h1,
+#main-content h2 {
+  scroll-margin-top: 92px;
+}
+
+.skip-target--active {
+  border-radius: 6px;
+  outline: 3px solid var(--green);
+  outline-offset: 10px;
+  animation: skip-target-highlight 1000ms ease;
+}
+
+@keyframes skip-target-highlight {
+  0% {
+    outline-color: rgba(132, 242, 157, 0);
+  }
+
+  25% {
+    outline-color: rgba(132, 242, 157, 1);
+  }
+
+  100% {
+    outline-color: rgba(132, 242, 157, 0);
+  }
+}
+
 .menu-button--open:focus-visible {
   outline-color: #ffffff;
 }
@@ -1646,6 +1733,99 @@ a:focus-visible {
   margin-top: 20px;
 }
 
+/* =========================================================
+   APPLICATION ERROR BOUNDARY
+   ========================================================= */
+
+.error-boundary {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  min-height: 100svh;
+
+  padding: clamp(90px, 12vh, 140px) 24px;
+
+  overflow-x: hidden;
+
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.error-boundary__card {
+  position: relative;
+
+  width: min(760px, 100%);
+
+  padding: clamp(32px, 6vw, 64px);
+
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  box-shadow: 0 28px 90px rgba(20, 20, 20, 0.1);
+}
+
+.error-boundary__card::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: var(--green);
+}
+
+.error-boundary__code {
+  margin: 0 0 18px;
+
+  color: var(--muted);
+
+  font-family: "Jost", system-ui, sans-serif;
+
+  font-size: clamp(4.5rem, 12vw, 9rem);
+
+  font-weight: 600;
+  letter-spacing: -0.07em;
+  line-height: 0.8;
+
+  opacity: 0.18;
+}
+
+.error-boundary h1 {
+  max-width: 650px;
+
+  margin: 0 0 24px;
+
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.error-boundary__description {
+  max-width: 610px;
+
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: clamp(0.94rem, 1.3vw, 1.05rem);
+
+  line-height: 1.8;
+}
+
+.error-boundary .button-row {
+  margin-top: 34px;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(34px);
@@ -2087,6 +2267,32 @@ a:focus-visible {
   .home-project-showcase__image-wrap:hover img {
     transform: none;
   }
+  .error-boundary {
+    padding: 90px 16px 40px;
+  }
+
+  .error-boundary__card {
+    padding: 34px 24px;
+
+    border-radius: 14px;
+  }
+
+  .error-boundary__code {
+    font-size: 4.5rem;
+  }
+
+  .error-boundary h1 {
+    font-size: clamp(2.7rem, 14vw, 4.2rem);
+  }
+
+  .error-boundary .button-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .error-boundary .button {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2111,6 +2317,9 @@ a:focus-visible {
 
   .page-loader__spinner {
     animation-duration: 1400ms;
+  }
+  .skip-target--active {
+    animation: none;
   }
 }
 

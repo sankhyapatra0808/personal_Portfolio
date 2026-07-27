@@ -20,7 +20,7 @@ export default function ProjectsPage() {
   }, [activeCategory]);
 
   return (
-    <main className="inner-page projects-page">
+    <main id="main-content" className="inner-page projects-page" tabIndex={-1}>
       <PageTitle
         title="Projects — Sankhya Patra"
         description="Selected web and mobile projects by Sankhya Patra, including SplitVerse and DevArena."

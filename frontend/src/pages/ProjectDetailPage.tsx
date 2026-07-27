@@ -35,7 +35,11 @@ export default function ProjectDetailPage() {
   };
 
   return (
-    <main className="inner-page project-detail-page">
+    <main
+      id="main-content"
+      className="inner-page project-detail-page"
+      tabIndex={-1}
+    >
       <PageTitle
         title={`${project.title} — Sankhya Patra`}
         description={project.summary}
