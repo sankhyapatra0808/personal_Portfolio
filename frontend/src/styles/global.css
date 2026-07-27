@@ -100,6 +100,14 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
+.menu-button--open:focus-visible {
+  outline-color: #ffffff;
+}
+
+.navigation-overlay a:focus-visible {
+  outline-color: var(--green);
+}
+
 .page-shell {
   width: var(--page-width);
   margin-inline: auto;
@@ -176,16 +184,32 @@ a:focus-visible {
   inset: 0;
   z-index: 100;
   display: grid;
+
+  overflow: hidden;
+
   background: #111;
   color: #fff;
+
+  visibility: hidden;
   clip-path: circle(0 at calc(100% - 52px) 50px);
+
   pointer-events: none;
-  transition: clip-path 650ms cubic-bezier(0.77, 0, 0.18, 1);
+
+  transition:
+    clip-path 650ms cubic-bezier(0.77, 0, 0.18, 1),
+    visibility 0s linear 650ms;
 }
 
 .navigation-overlay--open {
+  visibility: visible;
+
   clip-path: circle(150% at calc(100% - 52px) 50px);
+
   pointer-events: auto;
+
+  transition:
+    clip-path 650ms cubic-bezier(0.77, 0, 0.18, 1),
+    visibility 0s linear 0s;
 }
 
 .navigation-overlay__inner {
@@ -231,9 +255,16 @@ a:focus-visible {
 }
 
 .navigation-link:hover,
+.navigation-link:focus-visible,
 .navigation-link--active {
   color: #fff;
   transform: translateX(10px);
+}
+
+.navigation-link:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid var(--green);
+  outline-offset: 8px;
 }
 
 .navigation-overlay__footer {
@@ -242,6 +273,23 @@ a:focus-visible {
   margin-top: auto;
   color: #b5b5b5;
   font-size: 0.88rem;
+}
+
+.navigation-overlay__footer a {
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.navigation-overlay__footer a:hover,
+.navigation-overlay__footer a:focus-visible {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.navigation-overlay__footer a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 6px;
 }
 
 .home-page {
@@ -557,21 +605,17 @@ a:focus-visible {
   transform: translateX(3px);
 }
 
-.section-dots
-  .section-dot--active {
+.section-dots .section-dot--active {
   color: var(--ink);
   opacity: 1;
   transform: translateX(6px);
 }
 
-.section-dots
-  .section-dot--active::before {
+.section-dots .section-dot--active::before {
   width: 10px;
   height: 10px;
   background: var(--green);
-  box-shadow:
-    0 0 0 4px
-    rgba(132, 242, 157, 0.18);
+  box-shadow: 0 0 0 4px rgba(132, 242, 157, 0.18);
 }
 
 .section-dots--light a {
@@ -582,13 +626,11 @@ a:focus-visible {
   color: #ffffff;
 }
 
-.section-dots--light
-  .section-dot--active {
+.section-dots--light .section-dot--active {
   color: #ffffff;
 }
 
-.section-dots--light
-  .section-dot--active::before {
+.section-dots--light .section-dot--active::before {
   background: var(--green);
 }
 
@@ -1369,7 +1411,9 @@ a:focus-visible {
 
 .archive-row {
   display: grid;
-  grid-template-columns: 90px minmax(180px, 0.72fr) minmax(135px, 0.42fr) minmax(260px, 1.18fr) 36px;
+  grid-template-columns:
+    90px minmax(180px, 0.72fr) minmax(135px, 0.42fr)
+    minmax(260px, 1.18fr) 36px;
   align-items: center;
   gap: 22px;
   min-height: 92px;
@@ -2017,6 +2061,14 @@ a:focus-visible {
   .home-project-showcase .button-row {
     margin-top: 28px;
   }
+
+  .navigation-overlay {
+    clip-path: circle(0 at calc(100% - 37px) 39px);
+  }
+
+  .navigation-overlay--open {
+    clip-path: circle(170% at calc(100% - 37px) 39px);
+  }
 }
 @media (hover: none) {
   .home-project-showcase__image-wrap {
@@ -2051,6 +2103,15 @@ a:focus-visible {
     opacity: 1;
     transform: none;
   }
+
+  .navigation-overlay,
+  .navigation-overlay--open {
+    clip-path: none;
+  }
+
+  .page-loader__spinner {
+    animation-duration: 1400ms;
+  }
 }
 
 /* =========================================================
@@ -2081,10 +2142,7 @@ a:focus-visible {
    * Use more horizontal space than the normal content
    * sections so the heading and form do not collide.
    */
-  width: min(
-    1280px,
-    calc(100% - 160px)
-  );
+  width: min(1280px, calc(100% - 160px));
 
   min-width: 0;
   min-height: 0;
@@ -2096,16 +2154,9 @@ a:focus-visible {
     minmax(420px, 1.12fr);
 
   align-items: center;
-  gap: clamp(
-    48px,
-    5vw,
-    84px
-  );
+  gap: clamp(48px, 5vw, 84px);
 
-  padding:
-    clamp(76px, 8vh, 100px)
-    0
-    clamp(22px, 3vh, 38px);
+  padding: clamp(76px, 8vh, 100px) 0 clamp(22px, 3vh, 38px);
 }
 
 .contact-copy {
@@ -2114,11 +2165,7 @@ a:focus-visible {
 }
 
 .contact-copy .eyebrow {
-  margin-bottom: clamp(
-    20px,
-    3vh,
-    30px
-  );
+  margin-bottom: clamp(20px, 3vh, 30px);
 }
 
 .contact-copy h2 {
@@ -2128,18 +2175,11 @@ a:focus-visible {
    */
   width: 100%;
   max-width: 7.4ch;
-  margin:
-    0
-    0
-    clamp(22px, 3vh, 34px);
+  margin: 0 0 clamp(22px, 3vh, 34px);
 
   color: #ffffff;
 
-  font-size: clamp(
-    4rem,
-    5.25vw,
-    6.25rem
-  );
+  font-size: clamp(4rem, 5.25vw, 6.25rem);
 
   font-weight: 500;
   letter-spacing: -0.055em;
@@ -2153,18 +2193,9 @@ a:focus-visible {
   max-width: 440px;
   margin: 0;
 
-  color: rgba(
-    255,
-    255,
-    255,
-    0.62
-  );
+  color: rgba(255, 255, 255, 0.62);
 
-  font-size: clamp(
-    0.88rem,
-    1.1vw,
-    1rem
-  );
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
 
   line-height: 1.75;
 }
@@ -2176,21 +2207,12 @@ a:focus-visible {
   gap: 16px 28px;
 
   max-width: 520px;
-  margin-top: clamp(
-    24px,
-    4vh,
-    38px
-  );
+  margin-top: clamp(24px, 4vh, 38px);
 }
 
 .contact-links a {
   min-width: 0;
-  color: rgba(
-    255,
-    255,
-    255,
-    0.78
-  );
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .contact-links a:hover {
@@ -2212,34 +2234,19 @@ a:focus-visible {
    * compact enough for the footer to remain visible.
    */
   min-height: 0;
-  height: clamp(
-    420px,
-    57vh,
-    548px
-  );
+  height: clamp(420px, 57vh, 548px);
 
-  padding: clamp(
-    26px,
-    3vw,
-    40px
-  );
+  padding: clamp(26px, 3vw, 40px);
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.17);
+  border: 1px solid rgba(255, 255, 255, 0.17);
 
   border-radius: 26px;
 
-  background:
-    rgba(255, 255, 255, 0.045);
+  background: rgba(255, 255, 255, 0.045);
 
   display: grid;
   align-content: stretch;
-  gap: clamp(
-    16px,
-    2vh,
-    22px
-  );
+  gap: clamp(16px, 2vh, 22px);
 }
 
 .contact-form textarea {
@@ -2252,17 +2259,11 @@ a:focus-visible {
  * It no longer extends below the snap viewport.
  */
 .contact-section__footer {
-  width: min(
-    1280px,
-    calc(100% - 160px)
-  );
+  width: min(1280px, calc(100% - 160px));
 
   min-width: 0;
   margin: 0 auto;
-  padding:
-    0
-    0
-    clamp(10px, 1.8vh, 18px);
+  padding: 0 0 clamp(10px, 1.8vh, 18px);
 }
 
 .contact-section__footer > * {
@@ -2272,24 +2273,14 @@ a:focus-visible {
 .contact-section__footer .site-footer,
 .contact-section__footer .footer {
   margin: 0;
-  padding:
-    16px
-    0
-    10px;
+  padding: 16px 0 10px;
 }
 
-@media (
-  min-width: 981px
-) and (
-  max-height: 790px
-) {
+@media (min-width: 981px) and (max-height: 790px) {
   .contact-layout--form {
     gap: 46px;
 
-    padding:
-      60px
-      0
-      14px;
+    padding: 60px 0 14px;
   }
 
   .contact-copy .eyebrow {
@@ -2300,11 +2291,7 @@ a:focus-visible {
     max-width: 7.8ch;
     margin-bottom: 18px;
 
-    font-size: clamp(
-      3.4rem,
-      4.8vw,
-      5.3rem
-    );
+    font-size: clamp(3.4rem, 4.8vw, 5.3rem);
   }
 
   .contact-copy__description {
@@ -2318,15 +2305,9 @@ a:focus-visible {
   }
 
   .contact-form {
-    height: clamp(
-      370px,
-      55vh,
-      445px
-    );
+    height: clamp(370px, 55vh, 445px);
 
-    padding:
-      22px
-      28px;
+    padding: 22px 28px;
 
     gap: 13px;
   }
@@ -2342,10 +2323,7 @@ a:focus-visible {
 
   .contact-section__footer .site-footer,
   .contact-section__footer .footer {
-    padding:
-      10px
-      0
-      6px;
+    padding: 10px 0 6px;
   }
 }
 
@@ -2371,8 +2349,7 @@ a:focus-visible {
 .contact-form textarea {
   width: 100%;
   border: 0;
-  border-bottom: 1px solid
-    rgba(255, 255, 255, 0.24);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 0;
   padding: 12px 0;
   background: transparent;
@@ -2454,8 +2431,7 @@ a:focus-visible {
   border: 2px solid var(--line);
   border-top-color: var(--ink);
   border-radius: 50%;
-  animation:
-    page-loader-spin 700ms linear infinite;
+  animation: page-loader-spin 700ms linear infinite;
 }
 
 .page-loader p {
@@ -2522,28 +2498,18 @@ a:focus-visible {
   }
 
   .contact-layout--form {
-    width: min(
-      760px,
-      calc(100% - 64px)
-    );
+    width: min(760px, calc(100% - 64px));
 
     grid-template-columns: 1fr;
     gap: 52px;
 
-    padding:
-      110px
-      0
-      64px;
+    padding: 110px 0 64px;
   }
 
   .contact-copy h2 {
     max-width: 9ch;
 
-    font-size: clamp(
-      3.8rem,
-      11vw,
-      6rem
-    );
+    font-size: clamp(3.8rem, 11vw, 6rem);
   }
 
   .contact-form {
@@ -2552,10 +2518,7 @@ a:focus-visible {
   }
 
   .contact-section__footer {
-    width: min(
-      760px,
-      calc(100% - 64px)
-    );
+    width: min(760px, calc(100% - 64px));
 
     padding-bottom: 24px;
   }
@@ -2566,20 +2529,13 @@ a:focus-visible {
     width: calc(100% - 36px);
     gap: 40px;
 
-    padding:
-      96px
-      0
-      50px;
+    padding: 96px 0 50px;
   }
 
   .contact-copy h2 {
     max-width: 8.5ch;
 
-    font-size: clamp(
-      3.2rem,
-      16vw,
-      4.75rem
-    );
+    font-size: clamp(3.2rem, 16vw, 4.75rem);
   }
 
   .contact-links {
