@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { Project } from "../data/projects";
 import Icon from "./Icon";
 import Reveal from "./Reveal";
+import OptimizedImage from "./OptimizedImage";
 
 type ProjectCardProps = {
   project: Project;
@@ -13,8 +14,14 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     <Reveal delay={Math.min(index * 80, 320)}>
       <Link className="project-card" to={`/projects/${project.slug}`}>
         <div className="project-card__image-wrap">
-          <img className="project-card__image" src={project.visual} alt={`${project.title} interface preview`} />
-          <span className="project-card__index">{String(index + 1).padStart(2, "0")}</span>
+          <OptimizedImage
+            className="project-card__image"
+            src={project.visual}
+            alt={`${project.title} interface preview`}
+          />
+          <span className="project-card__index">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </div>
         <div className="project-card__content">
           <div className="project-card__meta">

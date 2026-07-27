@@ -7,6 +7,7 @@ import Monogram from "../components/Monogram";
 import PageTitle from "../components/PageTitle";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
+import OptimizedImage from "../components/OptimizedImage";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import ContactForm from "../components/ContactForm";
@@ -140,11 +141,9 @@ export default function HomePage() {
         <div className="page-shell home-project-showcase">
           <Reveal className="home-project-showcase__media">
             <div className="home-project-showcase__image-wrap">
-              <img
+              <OptimizedImage
                 src={featuredProject.visual}
                 alt={`${featuredProject.title} interface preview`}
-                loading="eager"
-                decoding="async"
               />
             </div>
           </Reveal>

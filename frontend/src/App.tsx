@@ -4,13 +4,6 @@ import Navigation from "./components/Navigation";
 import RouteProgress from "./components/RouteProgress";
 import HomePage from "./pages/HomePage";
 
-/*
- * HomePage remains a normal import because it is the
- * first page visitors see.
- *
- * The remaining pages are loaded only when their route
- * is opened.
- */
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
@@ -37,7 +30,7 @@ function ScrollToTop() {
 
 function PageLoader() {
   return (
-    <div
+    <main
       className="page-loader"
       role="status"
       aria-live="polite"
@@ -46,7 +39,7 @@ function PageLoader() {
       <span className="page-loader__spinner" aria-hidden="true" />
 
       <p>Loading page...</p>
-    </div>
+    </main>
   );
 }
 
@@ -61,11 +54,6 @@ function handleSkipToMain(event: MouseEvent<HTMLAnchorElement>) {
     return;
   }
 
-  /*
-   * Prefer the first page heading because focusing the
-   * complete <main> element often produces no visible
-   * change, especially on the homepage.
-   */
   const focusTarget =
     mainContent.querySelector<HTMLElement>("[data-skip-target], h1, h2") ??
     mainContent;
@@ -76,18 +64,10 @@ function handleSkipToMain(event: MouseEvent<HTMLAnchorElement>) {
     focusTarget.setAttribute("tabindex", "-1");
   }
 
-  /*
-   * Focus first without allowing the browser to perform
-   * a separate automatic jump.
-   */
   focusTarget.focus({
     preventScroll: true,
   });
 
-  /*
-   * scrollIntoView also works with the homepage's
-   * internal .home-page scroll container.
-   */
   focusTarget.scrollIntoView({
     behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
       ? "auto"
@@ -96,28 +76,16 @@ function handleSkipToMain(event: MouseEvent<HTMLAnchorElement>) {
     inline: "nearest",
   });
 
-  /*
-   * Brief visual confirmation that the skip action
-   * successfully reached the content.
-   */
   focusTarget.classList.add("skip-target--active");
 
   window.setTimeout(() => {
     focusTarget.classList.remove("skip-target--active");
 
-    /*
-     * Remove only the temporary tabindex that this
-     * function added. Preserve existing tabindex values.
-     */
     if (!alreadyHadTabIndex) {
       focusTarget.removeAttribute("tabindex");
     }
   }, 1000);
 
-  /*
-   * Keep the meaningful fragment in the URL without
-   * causing another browser jump.
-   */
   window.history.replaceState(null, "", "#main-content");
 }
 

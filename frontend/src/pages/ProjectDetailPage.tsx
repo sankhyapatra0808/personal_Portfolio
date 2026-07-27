@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Icon from "../components/Icon";
 import PageTitle from "../components/PageTitle";
 import Reveal from "../components/Reveal";
+import OptimizedImage from "../components/OptimizedImage";
 import { projects } from "../data/projects";
 import NotFoundPage from "./NotFoundPage";
 
@@ -143,11 +144,10 @@ export default function ProjectDetailPage() {
               delay={index * 90}
               key={image}
             >
-              <img
+              <OptimizedImage
                 src={image}
                 alt={`${project.title} project screen ${index + 1}`}
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
+
               />
             </Reveal>
           ))}

@@ -5,6 +5,7 @@ import PageTitle from "../components/PageTitle";
 import ProjectCard from "../components/ProjectCard";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
+import OptimizedImage from "../components/OptimizedImage";
 import { categories, projects, type ProjectCategory } from "../data/projects";
 
 export default function ProjectsPage() {
@@ -38,11 +39,10 @@ export default function ProjectsPage() {
           </Reveal>
           <Reveal className="featured-project" delay={100}>
             <div className="featured-project__media">
-              <img
+              <OptimizedImage
                 src={featured.visual}
                 alt={`${featured.title} preview`}
-                loading="eager"
-                decoding="async"
+                priority
               />
             </div>
 
