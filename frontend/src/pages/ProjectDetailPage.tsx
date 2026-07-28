@@ -79,11 +79,6 @@ export default function ProjectDetailPage() {
               <strong>{project.year}</strong>
             </div>
             <div className="project-fact">
-              <span>Status</span>
-              <div>
-              </div>
-            </div>
-            <div className="project-fact">
               <span>Development period</span>
               <strong>{project.period}</strong>
             </div>
