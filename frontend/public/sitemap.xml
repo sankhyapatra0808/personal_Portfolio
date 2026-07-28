@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/about</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/projects</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/projects/archive</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/projects/splitverse-website</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/projects/splitverse-mobile</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/projects/devarena</loc>
+  </url>
+
+  <url>
+    <loc>https://personal-portfolio-flame-delta-42.vercel.app/projects/new-portfolio</loc>
+  </url>
+</urlset>
