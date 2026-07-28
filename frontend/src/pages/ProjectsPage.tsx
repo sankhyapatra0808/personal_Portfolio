@@ -23,8 +23,9 @@ export default function ProjectsPage() {
   return (
     <main id="main-content" className="inner-page projects-page" tabIndex={-1}>
       <PageTitle
-        title="Projects — Sankhya Patra"
-        description="Selected web and mobile projects by Sankhya Patra, including SplitVerse and DevArena."
+        title="Software Projects — Sankhya Patra"
+        description="Explore full-stack web and mobile projects by Sankhya Patra, including SplitVerse, SplitVerse Mobile, DevArena and this portfolio."
+        path="/projects"
       />
       <section className="projects-hero">
         <div className="page-shell">

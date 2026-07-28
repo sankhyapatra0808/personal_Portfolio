@@ -10,7 +10,8 @@ export default function ArchivePage() {
     <main id="main-content" className="inner-page archive-page" tabIndex={-1}>
       <PageTitle
         title="Project Archive — Sankhya Patra"
-        description="A compact archive of projects by Sankhya Patra."
+        description="Browse the complete software project archive of Sankhya Patra, covering full-stack development, mobile applications and product engineering."
+        path="/projects/archive"
       />
       <section className="archive-section">
         <div className="page-shell">

@@ -11,8 +11,9 @@ export default function AboutPage() {
   return (
     <main id="main-content" className="inner-page" tabIndex={-1}>
       <PageTitle
-        title="About — Sankhya Patra"
-        description="About Sankhya Patra, a full-stack developer focused on React, TypeScript, Node.js and practical product engineering."
+        title="About Sankhya Patra — Full-Stack & Mobile Developer"
+        description="Learn about Sankhya Patra, his full-stack development journey, technical capabilities and experience building practical web and mobile products."
+        path="/about"
       />
       <section className="inner-hero">
         <div className="page-shell inner-hero__grid">

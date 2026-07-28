@@ -67,8 +67,9 @@ export default function HomePage() {
   return (
     <main id="main-content" className="home-page" tabIndex={-1}>
       <PageTitle
-        title="Sankhya Patra — Full-Stack Developer"
-        description="Portfolio of Sankhya Patra featuring SplitVerse, DevArena and selected web and mobile work."
+        title="Sankhya Patra — Full-Stack & Mobile Developer"
+        description="Portfolio of Sankhya Patra, a full-stack and mobile developer building secure, responsive and practical products including SplitVerse and DevArena."
+        path="/"
       />
       <nav
         className={`section-dots ${

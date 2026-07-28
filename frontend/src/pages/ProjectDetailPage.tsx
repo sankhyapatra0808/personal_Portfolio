@@ -44,6 +44,8 @@ export default function ProjectDetailPage() {
       <PageTitle
         title={`${project.title} — Sankhya Patra`}
         description={project.summary}
+        path={`/projects/${project.slug}`}
+        image={project.visual}
       />
       <Link className="back-link" to="/projects">
         <Icon name="back" /> Back to projects
@@ -147,7 +149,6 @@ export default function ProjectDetailPage() {
               <OptimizedImage
                 src={image}
                 alt={`${project.title} project screen ${index + 1}`}
-
               />
             </Reveal>
           ))}
