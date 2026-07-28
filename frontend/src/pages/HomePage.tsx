@@ -8,6 +8,8 @@ import PageTitle from "../components/PageTitle";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import OptimizedImage from "../components/OptimizedImage";
+import homePortrait from "../assets/profile/sankhya-home.webp";
+import aboutPortrait from "../assets/profile/sankhya-about.webp";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import ContactForm from "../components/ContactForm";
@@ -110,7 +112,11 @@ export default function HomePage() {
             </div>
           </Reveal>
           <Reveal className="hero-art" delay={180}>
-            <Monogram />
+            <Monogram
+              src={homePortrait}
+              alt="Professional portrait of Sankhya Patra"
+              priority
+            />
           </Reveal>
         </div>
         <a className="scroll-cue" href="#about">
@@ -122,7 +128,11 @@ export default function HomePage() {
       <section className="snap-section feature-section" id="about">
         <div className="page-shell feature-grid">
           <Reveal className="feature-visual">
-            <Monogram compact />
+            <Monogram
+              src={aboutPortrait}
+              alt="Sankhya Patra working at a laptop in a professional workspace"
+              compact
+            />
           </Reveal>
           <Reveal className="feature-copy" delay={100}>
             <SectionHeading

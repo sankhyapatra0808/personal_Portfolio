@@ -4,6 +4,7 @@ import Monogram from "../components/Monogram";
 import PageTitle from "../components/PageTitle";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
+import aboutPortrait from "../assets/profile/sankhya-about.webp";
 import { experience, profile, skillGroups } from "../data/profile";
 
 export default function AboutPage() {
@@ -16,7 +17,10 @@ export default function AboutPage() {
       <section className="inner-hero">
         <div className="page-shell inner-hero__grid">
           <Reveal className="inner-hero__visual">
-            <Monogram />
+            <Monogram
+              src={aboutPortrait}
+              alt="Sankhya Patra working at a laptop in a professional workspace"
+            />
           </Reveal>
           <Reveal className="inner-hero__copy" delay={120}>
             <p className="eyebrow">About me</p>

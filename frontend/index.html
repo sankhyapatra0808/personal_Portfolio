@@ -2,27 +2,124 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f7f5" />
+
+    <!-- Establish font-server connections early. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Portfolio typography. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+    />
+
+    <!-- Basic SEO metadata. -->
     <meta
       name="description"
       content="Portfolio of Sankhya Patra — full-stack developer building thoughtful web and mobile products."
     />
+
     <meta
       name="keywords"
       content="Sankhya Patra, React developer, TypeScript developer, SplitVerse, DevArena, portfolio"
     />
-    <meta property="og:title" content="Sankhya Patra — Portfolio" />
+
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+
+    <!-- Open Graph metadata -->
+    <meta
+      property="og:title"
+      content="Sankhya Patra — Full-Stack and Mobile Developer"
+    />
+
     <meta
       property="og:description"
-      content="Selected web and mobile projects by Sankhya Patra."
+      content="Explore selected web and mobile projects by Sankhya Patra, including SplitVerse and DevArena."
     />
+
     <meta property="og:type" content="website" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+
+    <meta property="og:site_name" content="Sankhya Patra Portfolio" />
+
+    <meta property="og:locale" content="en_IN" />
+
+    <meta property="og:image" content="%VITE_SITE_URL%/og-image.png" />
+
+    <meta
+      property="og:image:secure_url"
+      content="%VITE_SITE_URL%/og-image.png"
+    />
+
+    <meta property="og:image:type" content="image/png" />
+
+    <meta property="og:image:width" content="1200" />
+
+    <meta property="og:image:height" content="630" />
+
+    <meta
+      property="og:image:alt"
+      content="Sankhya Patra — Full-Stack and Mobile Developer"
+    />
+
+    <!-- X and Twitter card metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta
+      name="twitter:title"
+      content="Sankhya Patra — Full-Stack and Mobile Developer"
+    />
+
+    <meta
+      name="twitter:description"
+      content="Explore selected web and mobile projects by Sankhya Patra, including SplitVerse and DevArena."
+    />
+
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og-image.png" />
+
+    <meta
+      name="twitter:image:alt"
+      content="Sankhya Patra — Full-Stack and Mobile Developer"
+    />
+
+    <!-- ==================================================
+         FAVICONS AND APPLICATION ICONS
+         ================================================== -->
+
+    <!-- Modern scalable favicon. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Standard PNG favicon sizes. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <!-- Legacy browser favicon support. -->
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <!-- iPhone and iPad home-screen icon. -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Web application manifest. -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Browser and mobile interface colours. -->
+    <meta name="theme-color" content="#151515" />
+
+    <meta name="application-name" content="Sankhya Patra Portfolio" />
+
+    <meta name="apple-mobile-web-app-title" content="Sankhya Patra" />
+
     <title>Sankhya Patra — Portfolio</title>
   </head>
+
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
