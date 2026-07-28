@@ -51,7 +51,6 @@ export default function ProjectsPage() {
               <p className="eyebrow">Featured project</p>
 
               <div className="featured-project__meta">
-                <span className="project-status-badge">{featured.status}</span>
                 <span>{featured.period}</span>
               </div>
 

@@ -2,11 +2,13 @@ import {
   useEffect,
   useRef,
   useState,
+  type MouseEvent,
 } from "react";
 import {
   Link,
   NavLink,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { profile } from "../data/profile";
 import Icon from "./Icon";
@@ -30,6 +32,47 @@ const navigationLinks = [
   },
 ];
 
+const HOME_TRANSITION_DURATION = 650;
+
+const SITE_MARK_STEP_DURATION = 58;
+
+const siteMarkNameSteps = [
+  {
+    first: "S",
+    last: "P",
+  },
+  {
+    first: "Sa",
+    last: "Pa",
+  },
+  {
+    first: "San",
+    last: "Pat",
+  },
+  {
+    first: "Sank",
+    last: "Patr",
+  },
+  {
+    first: "Sankh",
+    last: "Patra",
+  },
+  {
+    first: "Sankhy",
+    last: "Patra",
+  },
+  {
+    first: "Sankhya",
+    last: "Patra",
+  },
+] as const;
+
+type HomeTransitionPhase =
+  | "idle"
+  | "waiting"
+  | "opening"
+  | "closing";
+
 const focusableSelector = [
   'a[href]',
   'button:not([disabled])',
@@ -42,7 +85,18 @@ const focusableSelector = [
 export default function Navigation() {
   const [open, setOpen] = useState(false);
 
+  const [siteMarkStep, setSiteMarkStep] =
+    useState(0);
+
+  const [siteMarkHovered, setSiteMarkHovered] =
+    useState(false);
+
+  const [homeTransitionPhase, setHomeTransitionPhase] =
+    useState<HomeTransitionPhase>("idle");
+
   const { pathname } = useLocation();
+
+  const navigate = useNavigate();
 
   const menuButtonRef =
     useRef<HTMLButtonElement>(null);
@@ -52,9 +106,244 @@ export default function Navigation() {
 
   const wasOpenRef = useRef(false);
 
+  const homeTransitionTimersRef =
+    useRef<number[]>([]);
+
+  const siteMarkAnimationTimerRef =
+    useRef<number | null>(null);
+
+  const siteMarkStepRef =
+    useRef(0);
+
   const closeMenu = () => {
     setOpen(false);
   };
+
+  const updateSiteMarkStep = (
+    nextStep: number,
+  ) => {
+    siteMarkStepRef.current = nextStep;
+    setSiteMarkStep(nextStep);
+  };
+
+  const clearSiteMarkAnimation = () => {
+    if (
+      siteMarkAnimationTimerRef.current !==
+      null
+    ) {
+      window.clearTimeout(
+        siteMarkAnimationTimerRef.current,
+      );
+
+      siteMarkAnimationTimerRef.current =
+        null;
+    }
+  };
+
+  const animateSiteMarkTo = (
+    targetStep: number,
+  ) => {
+    clearSiteMarkAnimation();
+
+    const runNextStep = () => {
+      const currentStep =
+        siteMarkStepRef.current;
+
+      if (currentStep === targetStep) {
+        siteMarkAnimationTimerRef.current =
+          null;
+        return;
+      }
+
+      const direction =
+        targetStep > currentStep ? 1 : -1;
+
+      const nextStep =
+        currentStep + direction;
+
+      updateSiteMarkStep(nextStep);
+
+      if (nextStep !== targetStep) {
+        siteMarkAnimationTimerRef.current =
+          window.setTimeout(
+            runNextStep,
+            SITE_MARK_STEP_DURATION,
+          );
+      } else {
+        siteMarkAnimationTimerRef.current =
+          null;
+      }
+    };
+
+    runNextStep();
+  };
+
+  const handleSiteMarkMouseEnter = () => {
+    if (homeTransitionPhase !== "idle") {
+      return;
+    }
+
+    setSiteMarkHovered(true);
+
+    animateSiteMarkTo(
+      siteMarkNameSteps.length - 1,
+    );
+  };
+
+  const handleSiteMarkMouseLeave = () => {
+    setSiteMarkHovered(false);
+    clearSiteMarkAnimation();
+    updateSiteMarkStep(0);
+  };
+
+  const resetSiteMark = () => {
+    setSiteMarkHovered(false);
+    clearSiteMarkAnimation();
+    updateSiteMarkStep(0);
+  };
+
+  const clearHomeTransitionTimers = () => {
+    homeTransitionTimersRef.current.forEach(
+      (timerId) => {
+        window.clearTimeout(timerId);
+      },
+    );
+
+    homeTransitionTimersRef.current = [];
+  };
+
+  const scheduleHomeTransitionStep = (
+    callback: () => void,
+    delay: number,
+  ) => {
+    const timerId = window.setTimeout(
+      callback,
+      delay,
+    );
+
+    homeTransitionTimersRef.current.push(
+      timerId,
+    );
+  };
+
+  const scrollToHomepageTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+
+    const homePage =
+      document.querySelector<HTMLElement>(
+        ".home-page",
+      );
+
+    homePage?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+
+    document
+      .getElementById("home")
+      ?.scrollIntoView({
+        behavior: "auto",
+        block: "start",
+        inline: "nearest",
+      });
+  };
+
+  const startHomepageTransition = () => {
+    const prefersReducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+    const transitionDuration =
+      prefersReducedMotion
+        ? 20
+        : HOME_TRANSITION_DURATION;
+
+    setHomeTransitionPhase("opening");
+
+    scheduleHomeTransitionStep(() => {
+      navigate("/", {
+        replace: pathname === "/",
+      });
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          scrollToHomepageTop();
+
+          setHomeTransitionPhase(
+            "closing",
+          );
+
+          scheduleHomeTransitionStep(
+            () => {
+              setHomeTransitionPhase(
+                "idle",
+              );
+            },
+            transitionDuration,
+          );
+        });
+      });
+    }, transitionDuration);
+  };
+
+  const handleSiteMarkClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+  ) => {
+    event.preventDefault();
+
+    if (homeTransitionPhase !== "idle") {
+      return;
+    }
+
+    resetSiteMark();
+    clearHomeTransitionTimers();
+
+    if (open) {
+      const prefersReducedMotion =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+      setHomeTransitionPhase("waiting");
+      closeMenu();
+
+      scheduleHomeTransitionStep(
+        startHomepageTransition,
+        prefersReducedMotion
+          ? 20
+          : HOME_TRANSITION_DURATION,
+      );
+
+      return;
+    }
+
+    startHomepageTransition();
+  };
+
+  useEffect(() => {
+    return () => {
+      homeTransitionTimersRef.current.forEach(
+        (timerId) => {
+          window.clearTimeout(timerId);
+        },
+      );
+
+      if (
+        siteMarkAnimationTimerRef.current !==
+        null
+      ) {
+        window.clearTimeout(
+          siteMarkAnimationTimerRef.current,
+        );
+      }
+    };
+  }, []);
 
   /*
    * Close the navigation automatically whenever
@@ -213,13 +502,62 @@ export default function Navigation() {
   return (
     <>
       <Link
-        className="site-mark"
+        className={`site-mark ${
+          siteMarkHovered
+            ? "site-mark--expanded"
+            : ""
+        } ${
+          homeTransitionPhase !== "idle"
+            ? "site-mark--transitioning"
+            : ""
+        }`}
         to="/"
-        aria-label="Go to homepage"
-        onClick={closeMenu}
+        aria-label="Go to the top of the homepage"
+        aria-disabled={
+          homeTransitionPhase !== "idle"
+        }
+        onMouseEnter={
+          handleSiteMarkMouseEnter
+        }
+        onMouseLeave={
+          handleSiteMarkMouseLeave
+        }
+        onClick={handleSiteMarkClick}
       >
-        SP
+        <span
+          className="site-mark__label"
+          aria-hidden="true"
+        >
+          <span>
+            {
+              siteMarkNameSteps[
+                siteMarkStep
+              ].first
+            }
+          </span>
+
+          <span>
+            {
+              siteMarkNameSteps[
+                siteMarkStep
+              ].last
+            }
+          </span>
+        </span>
       </Link>
+
+      <div
+        className={`home-transition-overlay ${
+          homeTransitionPhase !== "idle"
+            ? "home-transition-overlay--active"
+            : ""
+        } ${
+          homeTransitionPhase === "opening"
+            ? "home-transition-overlay--open"
+            : ""
+        }`}
+        aria-hidden="true"
+      />
 
       <button
         ref={menuButtonRef}

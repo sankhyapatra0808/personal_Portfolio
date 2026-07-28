@@ -163,9 +163,6 @@ export default function HomePage() {
             <p className="eyebrow">Featured Project</p>
 
             <div className="home-project-showcase__meta">
-              <span className="project-status-badge">
-                {featuredProject.status}
-              </span>
               <span>{featuredProject.period}</span>
             </div>
 

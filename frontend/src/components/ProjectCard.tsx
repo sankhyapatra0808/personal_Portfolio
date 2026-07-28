@@ -25,7 +25,6 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
         </div>
         <div className="project-card__content">
           <div className="project-card__meta">
-            <span className="project-status-badge">{project.status}</span>
             <span className="project-card__period">{project.period}</span>
           </div>
           <p className="eyebrow">{project.eyebrow}</p>

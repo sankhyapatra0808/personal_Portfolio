@@ -81,7 +81,6 @@ export default function ProjectDetailPage() {
             <div className="project-fact">
               <span>Status</span>
               <div>
-                <span className="project-status-badge">{project.status}</span>
               </div>
             </div>
             <div className="project-fact">

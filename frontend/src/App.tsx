@@ -1,7 +1,9 @@
+import { Analytics } from "@vercel/analytics/react";
 import { lazy, Suspense, useEffect, type MouseEvent } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import RouteProgress from "./components/RouteProgress";
+import StructuredData from "./components/StructuredData";
 import HomePage from "./pages/HomePage";
 
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -97,6 +99,7 @@ export default function App() {
       </a>
 
       <ScrollToTop />
+      <StructuredData />
       <RouteProgress />
       <Navigation />
 
@@ -115,6 +118,8 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+
+      <Analytics />
     </>
   );
 }

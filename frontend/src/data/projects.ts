@@ -173,41 +173,6 @@ export const projects: Project[] = [
     code: "https://github.com/sankhyapatra0808/Dev_Arena",
     codeLabel: "Private Repository",
   },
-  {
-    slug: "new-portfolio",
-    title: "New Portfolio",
-    eyebrow: "A portfolio rebuilt around my work",
-    year: "2026",
-    period: "July 2026 — Present",
-    role: "Designer · Frontend Developer",
-    status: "In Development",
-    category: ["Frontend"],
-    featured: false,
-    summary:
-      "A clean, responsive portfolio rewritten from a Next.js reference into React, TypeScript, Vite and handcrafted CSS.",
-    description: [
-      "New Portfolio preserves the strongest parts of the reference experience—large editorial typography, full-screen landing sections, project filtering, detailed case-study pages and restrained motion—while replacing the entire implementation and identity.",
-      "The project removes Next.js, Tailwind CSS, Spotify secrets and the third-party chat widget. It uses only the frontend approach already familiar from SplitVerse Website: React, TypeScript, Vite, React Router and modular CSS.",
-      "All personal information and projects are stored in typed data files, making future updates straightforward without changing page components.",
-    ],
-    tech: ["React", "TypeScript", "Vite", "CSS", "React Router"],
-    highlights: [
-      "Full-screen snap-scrolling homepage",
-      "Accessible animated navigation overlay",
-      "Typed, data-driven project case studies",
-      "No exposed secrets or unnecessary integrations",
-    ],
-    visual: "/project-visuals/new-portfolio.svg",
-    gallery: [
-      "/project-visuals/new-portfolio.svg",
-      "/project-visuals/new-portfolio-detail.svg",
-    ],
-    code: "https://github.com/sankhyapatra0808/personal_Portfolio",
-    codeLabel: "Source Code",
-
-    preview: "https://personal-portfolio-flame-delta-42.vercel.app",
-    previewLabel: "Visit Portfolio",
-  },
 ];
 
 export const categories = ["All", "Full Stack", "Mobile", "Frontend"] as const;

@@ -28,10 +28,7 @@ export default function Monogram({
         priority={priority}
       />
 
-      <span
-        className="profile-portrait__accent"
-        aria-hidden="true"
-      />
+
 
       <figcaption className="profile-portrait__label">
         Sankhya Patra
