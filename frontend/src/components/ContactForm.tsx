@@ -8,11 +8,7 @@ type ContactFields = {
   company: string;
 };
 
-type FormStatus =
-  | "idle"
-  | "sending"
-  | "success"
-  | "error";
+type FormStatus = "idle" | "sending" | "success" | "error";
 
 const initialFields: ContactFields = {
   name: "",
@@ -22,23 +18,16 @@ const initialFields: ContactFields = {
   company: "",
 };
 
-const apiUrl =
-  import.meta.env.VITE_API_URL?.replace(/\/$/, "") ?? "";
+const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, "") ?? "";
 
 export default function ContactForm() {
-  const [fields, setFields] =
-    useState<ContactFields>(initialFields);
+  const [fields, setFields] = useState<ContactFields>(initialFields);
 
-  const [status, setStatus] =
-    useState<FormStatus>("idle");
+  const [status, setStatus] = useState<FormStatus>("idle");
 
-  const [errorMessage, setErrorMessage] =
-    useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const updateField = (
-    field: keyof ContactFields,
-    value: string,
-  ) => {
+  const updateField = (field: keyof ContactFields, value: string) => {
     setFields((current) => ({
       ...current,
       [field]: value,
@@ -55,11 +44,7 @@ export default function ContactForm() {
       return "Please enter your name.";
     }
 
-    if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        fields.email.trim(),
-      )
-    ) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim())) {
       return "Please enter a valid email address.";
     }
 
@@ -78,9 +63,7 @@ export default function ContactForm() {
     return "";
   };
 
-  const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const validationError = validate();
@@ -101,9 +84,7 @@ export default function ContactForm() {
 
     if (!apiUrl) {
       setStatus("error");
-      setErrorMessage(
-        "The contact service has not been configured.",
-      );
+      setErrorMessage("The contact service has not been configured.");
       return;
     }
 
@@ -117,21 +98,16 @@ export default function ContactForm() {
     }, 15000);
 
     try {
-      const response = await fetch(
-        `${apiUrl}/api/portfolio/contact`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(fields),
-          signal: controller.signal,
+      const response = await fetch(`${apiUrl}/api/portfolio/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(fields),
+        signal: controller.signal,
+      });
 
-      const result = (await response
-        .json()
-        .catch(() => ({}))) as {
+      const result = (await response.json().catch(() => ({}))) as {
         message?: string;
       };
 
@@ -142,10 +118,7 @@ export default function ContactForm() {
           );
         }
 
-        throw new Error(
-          result.message ??
-            "The message could not be sent.",
-        );
+        throw new Error(result.message ?? "The message could not be sent.");
       }
 
       setFields(initialFields);
@@ -153,13 +126,8 @@ export default function ContactForm() {
     } catch (error) {
       setStatus("error");
 
-      if (
-        error instanceof DOMException &&
-        error.name === "AbortError"
-      ) {
-        setErrorMessage(
-          "The request took too long. Please try again.",
-        );
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setErrorMessage("The request took too long. Please try again.");
       } else {
         setErrorMessage(
           error instanceof Error
@@ -173,11 +141,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form
-      className="contact-form"
-      onSubmit={handleSubmit}
-      noValidate
-    >
+    <form className="contact-form" onSubmit={handleSubmit} noValidate>
       <div className="contact-form__row">
         <label>
           <span>Name</span>
@@ -185,9 +149,7 @@ export default function ContactForm() {
           <input
             type="text"
             value={fields.name}
-            onChange={(event) =>
-              updateField("name", event.target.value)
-            }
+            onChange={(event) => updateField("name", event.target.value)}
             autoComplete="name"
             maxLength={80}
             required
@@ -200,9 +162,7 @@ export default function ContactForm() {
           <input
             type="email"
             value={fields.email}
-            onChange={(event) =>
-              updateField("email", event.target.value)
-            }
+            onChange={(event) => updateField("email", event.target.value)}
             autoComplete="email"
             maxLength={160}
             required
@@ -216,9 +176,7 @@ export default function ContactForm() {
         <input
           type="text"
           value={fields.subject}
-          onChange={(event) =>
-            updateField("subject", event.target.value)
-          }
+          onChange={(event) => updateField("subject", event.target.value)}
           maxLength={140}
           required
         />
@@ -229,27 +187,20 @@ export default function ContactForm() {
 
         <textarea
           value={fields.message}
-          onChange={(event) =>
-            updateField("message", event.target.value)
-          }
+          onChange={(event) => updateField("message", event.target.value)}
           rows={6}
           maxLength={3000}
           required
         />
       </label>
 
-      <label
-        className="contact-form__honeypot"
-        aria-hidden="true"
-      >
+      <label className="contact-form__honeypot" aria-hidden="true">
         <span>Company</span>
 
         <input
           type="text"
           value={fields.company}
-          onChange={(event) =>
-            updateField("company", event.target.value)
-          }
+          onChange={(event) => updateField("company", event.target.value)}
           tabIndex={-1}
           autoComplete="off"
         />
@@ -261,9 +212,7 @@ export default function ContactForm() {
           type="submit"
           disabled={status === "sending"}
         >
-          {status === "sending"
-            ? "Sending..."
-            : "Send Message"}
+          {status === "sending" ? "Sending..." : "Send Message"}
         </button>
 
         <span className="contact-form__count">
@@ -271,10 +220,7 @@ export default function ContactForm() {
         </span>
       </div>
 
-      <div
-        className="contact-form__feedback"
-        aria-live="polite"
-      >
+      <div className="contact-form__feedback" aria-live="polite">
         {status === "success" ? (
           <p className="contact-form__success">
             Your message was sent successfully.
@@ -282,9 +228,7 @@ export default function ContactForm() {
         ) : null}
 
         {status === "error" ? (
-          <p className="contact-form__error">
-            {errorMessage}
-          </p>
+          <p className="contact-form__error">{errorMessage}</p>
         ) : null}
       </div>
     </form>

@@ -205,7 +205,7 @@ export const projects: Project[] = [
     code: "https://github.com/sankhyapatra0808/personal_Portfolio",
     codeLabel: "Source Code",
 
-    preview: "https://YOUR-FINAL-PORTFOLIO-DOMAIN",
+    preview: "https://personal-portfolio-flame-delta-42.vercel.app",
     previewLabel: "Visit Portfolio",
   },
 ];
