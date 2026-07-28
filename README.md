@@ -42,10 +42,6 @@ An Expo and React Native Android application connected to the SplitVerse backend
 
 A developer-growth platform with authentication, activity logging, rankings, streaks, challenges, leaderboards and a contribution heatmap.
 
-### Personal Portfolio
-
-This responsive React and TypeScript portfolio includes accessible navigation, lazy-loaded routes, optimized media, SEO metadata, structured data, analytics and a production contact service.
-
 ## Technology stack
 
 ### Frontend
@@ -255,10 +251,6 @@ The portfolio includes semantic landmarks, visible focus indicators, keyboard-op
 ## SEO and discovery
 
 The portfolio includes route-specific metadata, canonical URLs, Open Graph tags, X/Twitter card tags, JSON-LD structured data, `robots.txt` and `sitemap.xml`.
-
-## GitHub repository settings
-
-The exact repository description, topics, website URL and social-preview instructions are documented in [`GITHUB_SETTINGS.md`](./GITHUB_SETTINGS.md).
 
 ## Licence and attribution
 
