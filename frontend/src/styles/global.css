@@ -3175,3 +3175,57 @@ a:focus-visible {
     width: calc(100% - 36px);
   }
 }
+
+/* =========================================================
+   CONTACT EMAIL VERIFICATION
+   ========================================================= */
+.contact-form__verification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 60px;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(132, 242, 157, 0.36);
+  border-radius: 14px;
+  background: rgba(132, 242, 157, 0.07);
+}
+
+.contact-form__verification p,
+.contact-form__verification-status {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: 0.78rem !important;
+  line-height: 1.55 !important;
+}
+
+.contact-form__mail-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #151515;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.contact-form__mail-link:hover {
+  background: var(--green);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 560px) {
+  .contact-form__verification {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

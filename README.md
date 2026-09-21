@@ -114,7 +114,25 @@ git clone https://github.com/sankhyapatra0808/My_Portfolio.git
 cd My_Portfolio
 ```
 
-### Frontend setup
+### Recommended root setup
+
+Install both frontend and backend dependencies from the repository root:
+
+```bash
+npm run setup
+```
+
+Then start both development servers together:
+
+```bash
+npm run dev
+```
+
+This starts the frontend on `http://localhost:5173` and the backend on `http://localhost:5000`.
+
+You can also start them separately with `npm run dev:frontend` and `npm run dev:backend`.
+
+### Frontend setup (alternative)
 
 ```bash
 cd frontend
@@ -151,6 +169,8 @@ Create `backend/.env`:
 NODE_ENV=development
 PORT=5000
 CLIENT_URLS=http://localhost:5173
+PUBLIC_SITE_URL=http://localhost:5173
+CONTACT_VERIFICATION_SECRET=replace_with_a_long_random_secret
 
 BREVO_SMTP_HOST=smtp-relay.brevo.com
 BREVO_SMTP_PORT=587

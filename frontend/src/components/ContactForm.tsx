@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 type ContactFields = {
   name: string;
@@ -8,7 +8,13 @@ type ContactFields = {
   company: string;
 };
 
-type FormStatus = "idle" | "sending" | "success" | "error";
+type FormStatus =
+  | "idle"
+  | "sending"
+  | "verification-sent"
+  | "verifying"
+  | "success"
+  | "error";
 
 const initialFields: ContactFields = {
   name: "",
@@ -19,13 +25,139 @@ const initialFields: ContactFields = {
 };
 
 const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, "") ?? "";
+const handledVerificationTokens = new Set<string>();
+
+function getMailProviderLink(email: string) {
+  const domain = email.trim().toLowerCase().split("@")[1] ?? "";
+
+  if (domain === "gmail.com" || domain === "googlemail.com") {
+    return {
+      label: "Open Gmail",
+      href: "https://mail.google.com/mail/u/0/#inbox",
+    };
+  }
+
+  if (
+    domain === "outlook.com" ||
+    domain === "hotmail.com" ||
+    domain === "live.com"
+  ) {
+    return {
+      label: "Open Outlook",
+      href: "https://outlook.live.com/mail/0/inbox",
+    };
+  }
+
+  if (domain === "yahoo.com" || domain.endsWith(".yahoo.com")) {
+    return {
+      label: "Open Yahoo Mail",
+      href: "https://mail.yahoo.com/",
+    };
+  }
+
+  if (domain === "proton.me" || domain === "protonmail.com") {
+    return {
+      label: "Open Proton Mail",
+      href: "https://mail.proton.me/u/0/inbox",
+    };
+  }
+
+  if (domain === "icloud.com" || domain === "me.com" || domain === "mac.com") {
+    return {
+      label: "Open iCloud Mail",
+      href: "https://www.icloud.com/mail/",
+    };
+  }
+
+  return null;
+}
+
+function removeVerificationTokenFromUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("contact_verify");
+  url.hash = "contact";
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
 
 export default function ContactForm() {
   const [fields, setFields] = useState<ContactFields>(initialFields);
-
   const [status, setStatus] = useState<FormStatus>("idle");
-
   const [errorMessage, setErrorMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [verificationEmail, setVerificationEmail] = useState("");
+
+  const mailProviderLink = getMailProviderLink(verificationEmail);
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get(
+      "contact_verify",
+    );
+
+    if (!token || handledVerificationTokens.has(token)) {
+      return;
+    }
+
+    handledVerificationTokens.add(token);
+
+    if (!apiUrl) {
+      setStatus("error");
+      setErrorMessage("The contact service has not been configured.");
+      return;
+    }
+
+    setStatus("verifying");
+    setErrorMessage("");
+    setStatusMessage("Verifying your email and sending your message...");
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    void fetch(`${apiUrl}/api/portfolio/contact/verify`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        const result = (await response.json().catch(() => ({}))) as {
+          message?: string;
+        };
+
+        if (!response.ok) {
+          throw new Error(
+            result.message ?? "The verification link could not be verified.",
+          );
+        }
+
+        setFields(initialFields);
+        setVerificationEmail("");
+        setStatusMessage(
+          result.message ?? "Email verified. Your message was sent successfully.",
+        );
+        setStatus("success");
+        removeVerificationTokenFromUrl();
+      })
+      .catch((error: unknown) => {
+        setStatus("error");
+
+        if (error instanceof DOMException && error.name === "AbortError") {
+          setErrorMessage(
+            "Verification took too long. Please reopen the verification link.",
+          );
+        } else {
+          setErrorMessage(
+            error instanceof Error
+              ? error.message
+              : "Something went wrong while verifying your email.",
+          );
+        }
+      })
+      .finally(() => {
+        window.clearTimeout(timeout);
+      });
+  }, []);
 
   const updateField = (field: keyof ContactFields, value: string) => {
     setFields((current) => ({
@@ -36,6 +168,8 @@ export default function ContactForm() {
     if (status !== "idle") {
       setStatus("idle");
       setErrorMessage("");
+      setStatusMessage("");
+      setVerificationEmail("");
     }
   };
 
@@ -90,12 +224,10 @@ export default function ContactForm() {
 
     setStatus("sending");
     setErrorMessage("");
+    setStatusMessage("");
 
     const controller = new AbortController();
-
-    const timeout = window.setTimeout(() => {
-      controller.abort();
-    }, 15000);
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
 
     try {
       const response = await fetch(`${apiUrl}/api/portfolio/contact`, {
@@ -109,20 +241,26 @@ export default function ContactForm() {
 
       const result = (await response.json().catch(() => ({}))) as {
         message?: string;
+        email?: string;
+        verificationRequired?: boolean;
       };
 
       if (!response.ok) {
         if (response.status === 429) {
           throw new Error(
-            "Too many messages were sent. Please try again later.",
+            result.message ?? "Too many requests. Please try again later.",
           );
         }
 
-        throw new Error(result.message ?? "The message could not be sent.");
+        throw new Error(result.message ?? "Verification could not be started.");
       }
 
-      setFields(initialFields);
-      setStatus("success");
+      setVerificationEmail(result.email ?? fields.email.trim().toLowerCase());
+      setStatusMessage(
+        result.message ??
+          "A verification link was sent. Open your email and click Verify & Send Message.",
+      );
+      setStatus("verification-sent");
     } catch (error) {
       setStatus("error");
 
@@ -132,7 +270,7 @@ export default function ContactForm() {
         setErrorMessage(
           error instanceof Error
             ? error.message
-            : "Something went wrong while sending your message.",
+            : "Something went wrong while requesting verification.",
         );
       }
     } finally {
@@ -210,9 +348,15 @@ export default function ContactForm() {
         <button
           className="button button--primary"
           type="submit"
-          disabled={status === "sending"}
+          disabled={status === "sending" || status === "verifying"}
         >
-          {status === "sending" ? "Sending..." : "Send Message"}
+          {status === "sending"
+            ? "Sending verification..."
+            : status === "verifying"
+              ? "Verifying..."
+              : status === "verification-sent"
+                ? "Resend Verification"
+                : "Send Message"}
         </button>
 
         <span className="contact-form__count">
@@ -221,9 +365,30 @@ export default function ContactForm() {
       </div>
 
       <div className="contact-form__feedback" aria-live="polite">
+        {status === "verification-sent" ? (
+          <div className="contact-form__verification">
+            <p>{statusMessage}</p>
+
+            {mailProviderLink ? (
+              <a
+                className="contact-form__mail-link"
+                href={mailProviderLink.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {mailProviderLink.label}
+              </a>
+            ) : null}
+          </div>
+        ) : null}
+
+        {status === "verifying" ? (
+          <p className="contact-form__verification-status">{statusMessage}</p>
+        ) : null}
+
         {status === "success" ? (
           <p className="contact-form__success">
-            Your message was sent successfully.
+            {statusMessage || "Your message was sent successfully."}
           </p>
         ) : null}
 
