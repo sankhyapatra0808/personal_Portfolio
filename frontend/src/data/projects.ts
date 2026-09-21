@@ -130,7 +130,7 @@ export const projects: Project[] = [
     code: "https://github.com/sankhyapatra0808/SplitVerse_Mobile",
     codeLabel: "View Mobile Code",
     preview:
-      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/download/v1.0.0-preview/SplitVerse-Mobile-v1.0.0-preview.apk",
+      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/latest/download/SplitVerse-v1.1.0.apk",
     previewLabel: "Download APK",
   },
   {
@@ -171,7 +171,9 @@ export const projects: Project[] = [
       "/project-visuals/devarena-detail.svg",
     ],
     code: "https://github.com/sankhyapatra0808/Dev_Arena",
-    codeLabel: "Private Repository",
+    codeLabel: "View Web Code",
+    preview: "https://devarena-six.vercel.app",
+    previewLabel: "Live Website",
   },
 ];
 
