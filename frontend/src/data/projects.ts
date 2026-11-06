@@ -130,7 +130,7 @@ export const projects: Project[] = [
     code: "https://github.com/sankhyapatra0808/SplitVerse_Mobile",
     codeLabel: "View Mobile Code",
     preview:
-      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/latest/download/SplitVerse-v1.1.0.apk",
+      "https://github.com/sankhyapatra0808/SplitVerse_Mobile/releases/latest",
     previewLabel: "Download APK",
   },
   {

@@ -7,12 +7,19 @@ import PageTitle from "../components/PageTitle";
 import Reveal from "../components/Reveal";
 import OptimizedImage from "../components/OptimizedImage";
 import { projects } from "../data/projects";
+import {
+  fetchLatestSplitVerseApkUrl,
+  SPLITVERSE_LATEST_RELEASE_PAGE,
+} from "../lib/githubReleases";
 import NotFoundPage from "./NotFoundPage";
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
   const project = projects.find((item) => item.slug === slug);
   const [atBottom, setAtBottom] = useState(false);
+  const [mobileApkUrl, setMobileApkUrl] = useState(
+    SPLITVERSE_LATEST_RELEASE_PAGE,
+  );
 
   useEffect(() => {
     const update = () => {
@@ -25,6 +32,23 @@ export default function ProjectDetailPage() {
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
+
+  // Resolve the APK for the latest published stable release. Never keep a
+  // versioned asset URL in the portfolio, and fall back to the releases page.
+  useEffect(() => {
+    if (slug !== "splitverse-mobile") return;
+
+    const controller = new AbortController();
+    void fetchLatestSplitVerseApkUrl(controller.signal)
+      .then((url) => {
+        if (!controller.signal.aborted && url) setMobileApkUrl(url);
+      })
+      .catch(() => {
+        // The fallback opens the latest releases page if GitHub is unreachable.
+      });
+
+    return () => controller.abort();
+  }, [slug]);
 
   if (!project) return <NotFoundPage />;
 
@@ -92,7 +116,15 @@ export default function ProjectDetailPage() {
             </div>
             <div className="button-row">
               {project.preview ? (
-                <ButtonLink to={project.preview} external icon="external">
+                <ButtonLink
+                  to={
+                    project.slug === "splitverse-mobile"
+                      ? mobileApkUrl
+                      : project.preview
+                  }
+                  external
+                  icon="external"
+                >
                   {project.previewLabel ?? "Live Preview"}
                 </ButtonLink>
               ) : null}
